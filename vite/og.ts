@@ -54,7 +54,7 @@ interface CardSpec {
 
 const CARDS: CardSpec[] = [
   { name: 'default', eyebrow: SITE_NAME, title: SITE_TAGLINE },
-  { name: 'home', eyebrow: 'Operations, not software', title: SITE_TAGLINE },
+  { name: 'home', eyebrow: '', title: SITE_TAGLINE },
   { name: 'services', eyebrow: 'Services', title: 'Six ways we take work off your team.' },
   {
     name: 'industries',
