@@ -2,18 +2,31 @@
 /**
  * SiteFooter
  *
- * Site chrome present on every page (PRD §6.1). Cream stock, matching the header
- * — the two pieces of chrome are the same sheet bracketing the page.
+ * Site chrome present on every page (PRD §6.1). INK stock — the footer PRD §10.3
+ * originally asked for. The header stays light, so the page is bracketed by two
+ * different grounds rather than by one sheet: the chrome above is paper, the
+ * chrome below is the page closing out.
  *
- * This gives up the ink footer PRD §10.3 asked for. The closing CTA above it is
- * now cream too, so the page ends on one continuous sheet — chrome and final ask
- * on the same surface — and ink survives only where the argument itself is dark
- * (the oversight layer). Anything that repaints one of these three surfaces must
- * repaint all of them: they share `--cream`, and the join between the closing
- * band and this one shows as a seam the moment they disagree.
+ * It carries the same entrance the ink page bands use — a seal hairline along
+ * the top edge (see Section.vue) — so crossing into the dark ground is stated in
+ * the site's existing language rather than happening as a bare colour change.
+ *
+ * The closing CTA above it is still cream. That join is now a hard edge, which
+ * is fine — a seam is two surfaces that ALMOST match, and these do not pretend
+ * to. What must not happen is the two drifting to near-identical values: repaint
+ * one toward the other and the boundary starts reading as a mistake.
+ *
+ * `.on-ink` is set on the element itself, so everything nested here — the
+ * wordmark, the booking pill, links — resolves through the site's one
+ * band-colour hook instead of through footer-local dark overrides.
  *
  * Link groups — Solutions, Industries, Company, Legal — are derived from the
  * canonical data model, so the footer can never drift from the source of truth.
+ *
+ * The newsletter strip opens the footer rather than occupying a band of its own.
+ * A signup does not deserve a page section — it is the smallest possible ask, and
+ * it belongs where a visitor who has finished reading is already looking. Sitting
+ * above the hairline keeps it clear of the nav columns without adding a surface.
  *
  * Owns its own chrome spacing; it is not a page `Section` (PRD §12.4 concerns
  * page content bands, not header/footer chrome).
@@ -22,19 +35,25 @@ import { RouterLink } from 'vue-router'
 import Container from '@/components/primitives/Container'
 import Logo from '@/components/layout/Logo'
 import BookingButton from '@/components/marketing/BookingButton'
+import NewsletterSignup from '@/components/marketing/NewsletterSignup'
 import { FOOTER_GROUPS } from '@/data/navigation'
+import { NEWSLETTER_COPY } from '@/data/newsletter'
 import { SITE_TAGLINE } from '@/lib/constants'
 
 const year = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="footer">
+  <footer class="footer on-ink">
     <Container>
+      <div class="footer__signup">
+        <NewsletterSignup :copy="NEWSLETTER_COPY" />
+      </div>
+
       <div class="footer__top">
         <div class="footer__brand">
           <RouterLink to="/" class="footer__logo" aria-label="TryEntitle — home">
-            <Logo tone="light" />
+            <Logo tone="inverse" />
           </RouterLink>
           <p class="footer__tagline">{{ SITE_TAGLINE }}</p>
           <BookingButton placement="footer" variant="primary" />
@@ -62,12 +81,33 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .footer {
-  background-color: var(--bond-raised);
-  color: var(--text-on-bond);
+  position: relative;
+  background-color: var(--ink);
+  color: var(--text-on-ink);
   /* The footer is not a Section, so it states its rhythm — but from the same
      scale, at the compact step, so it never lands between two of the steps. */
   padding-block: var(--section-rhythm-compact);
-  border-top: 1px solid var(--rule-on-bond);
+}
+
+/* The same seal hairline `.section--ink` draws when the ground goes dark, so the
+   footer enters the same way every other ink band does. */
+.footer::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--seal) 18%, var(--seal) 82%, transparent);
+  pointer-events: none;
+}
+
+/* The strip and the columns below it are separated the way the bottom bar is —
+   same rule, same rhythm step — so the footer reads as three stacked registers
+   rather than as a form that wandered into the chrome. */
+.footer__signup {
+  padding-bottom: var(--stack-block);
+  margin-bottom: var(--stack-lead);
+  border-bottom: 1px solid var(--rule-on-ink);
 }
 
 .footer__top {
@@ -97,7 +137,7 @@ const year = new Date().getFullYear()
 }
 
 .footer__tagline {
-  color: var(--text-on-bond-muted);
+  color: var(--text-on-ink-muted);
   font-size: var(--text-body-sm);
   line-height: 1.5;
 }
@@ -120,7 +160,7 @@ const year = new Date().getFullYear()
   font-size: var(--text-utility);
   letter-spacing: var(--tracking-utility);
   text-transform: uppercase;
-  color: var(--text-on-bond-muted);
+  color: var(--text-on-ink-muted);
   margin-bottom: var(--space-3);
 }
 
@@ -131,19 +171,18 @@ const year = new Date().getFullYear()
 }
 
 .footer__link {
-  color: var(--text-on-bond);
+  color: var(--text-on-ink);
   font-size: var(--text-body-sm);
   text-decoration: none;
 }
 
 /*
- * `--seal-ink`, not `--seal`. Raw seal was correct while this band was ink (6.4:1)
- * and is 2.6:1 on cream — the accent may fill a shape on paper but must not
- * colour text at this size. The darkened variant carries the same signal at
- * 5.4:1.
+ * Raw `--seal`, which is 6.4:1 on ink. `--seal-ink` is the darkened variant for
+ * paper and would drop to ~2.2:1 here — the pair is not interchangeable, and
+ * which one is correct follows the ground, not the component.
  */
 .footer__link:hover {
-  color: var(--seal-ink);
+  color: var(--seal);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -155,14 +194,14 @@ const year = new Date().getFullYear()
   gap: var(--space-2);
   margin-top: var(--stack-block);
   padding-top: var(--space-5);
-  border-top: 1px solid var(--rule-on-bond);
-  color: var(--text-on-bond-muted);
+  border-top: 1px solid var(--rule-on-ink);
+  color: var(--text-on-ink-muted);
   font-size: var(--text-body-sm);
 }
 
-/* Body-size accent text on paper — same 5.4:1 rule as the link hover above. */
+/* Body-size accent text on ink — same 6.4:1 seal as the link hover above. */
 .footer__name {
-  color: var(--seal-ink);
+  color: var(--seal);
   font-weight: 600;
 }
 </style>

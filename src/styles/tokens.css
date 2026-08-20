@@ -52,8 +52,10 @@
    *   --ink          the one dark band per page — the single hard contrast
    *   --bond         the page itself
    *   --cream        raised surfaces: cards, header, footer, closing band
-   *   --bond-raised  pure white, reserved for the one panel that must read as
-   *                  the brightest thing on screen (the calculator shell)
+   *   --bond-raised  pure white, the top rung — the testimonial band, the
+   *                  use-case grid, the last leaf of the about fold. (The
+   *                  calculator shell used to live here; it is now ink, so the
+   *                  brightest thing in that section is the seal result card.)
    *
    * Anything that needs to "stand out" moves ONE rung, not to a new hue. That
    * is what makes the scroll read as one document instead of a stack of

@@ -9,18 +9,20 @@
  *
  *   1  Hero                         bond   comprehension in five seconds
  *   2  Systems marquee              ink    credibility + stack qualification
- *   3  Cost of manual work          ink    agitate the pain, name the leaks
- *   4  Positioning contrast         bond   kill the "generic AI tool" objection
- *   5  Six core services            bond   scope clarity
- *   6  How an engagement runs       bond   de-risk the commitment
- *   7  Human oversight layer        ink    the differentiator
- *   8  Industries marquee           bond   self-identification (all fields)
- *   9  Hours calculator             bond   convert intent into a number
- *  10  Proof commitments            bond   credibility substitute
- *  11  Testimonials                 bond   renders nothing until real (FR12)
- *  12  Field notes                  bond   renders nothing until posts exist
- *  13  FAQ                          bond   clear final objections
- *  14  Closing CTA                  ink    book the call
+ *   3  About fold                   bond   who is asking, before what they do
+ *   4  Cost of manual work          ink    agitate the pain, name the leaks
+ *   5  Positioning contrast         bond   kill the "generic AI tool" objection
+ *   6  Six core services            bond   scope clarity
+ *   7  How an engagement runs       bond   de-risk the commitment
+ *   8  Human oversight layer        ink    the differentiator
+ *   9  Industries marquee           bond   self-identification (all fields)
+ *  10  Hours calculator             bond   convert intent into a number
+ *  11  Proof commitments            bond   credibility substitute
+ *  12  Contact panel                bond   the written route in, for non-bookers
+ *  13  Testimonials                 bond   renders nothing until real (FR12)
+ *  14  Field notes                  bond   renders nothing until posts exist
+ *  15  FAQ                          bond   clear final objections
+ *  16  Closing CTA                  ink    book the call
  *
  * Data is resolved here and passed down as props so every section stays
  * presentational and testable from a fixture (PRD §11.3 rule 3).
@@ -28,18 +30,22 @@
 import { useHead } from '@unhead/vue'
 
 import Hero from '@/components/sections/Hero'
+import AboutFold from '@/components/sections/AboutFold'
 import PainPoints from '@/components/sections/PainPoints'
 import OversightLayer from '@/components/sections/OversightLayer'
 import IndustriesMarquee from '@/components/sections/IndustriesMarquee'
 import HoursCalculator from '@/components/sections/HoursCalculator'
 import ProofCommitments from '@/components/sections/ProofCommitments'
+import ContactPanel from '@/components/sections/ContactPanel'
 import ProofStrip from '@/components/sections/ProofStrip'
 import FaqAccordion from '@/components/sections/FaqAccordion'
 import ClosingCta from '@/components/sections/ClosingCta'
 
 import { HOME_COPY } from '@/data/home'
+import { ABOUT_PANELS } from '@/data/about'
 import { PAIN_POINTS } from '@/data/pain-points'
 import { PROOF_COMMITMENTS } from '@/data/proof'
+import { CONTACT_COPY } from '@/data/contact'
 import { HOME_FAQ } from '@/data/faq'
 import { TESTIMONIALS } from '@/lib/proof'
 
@@ -75,12 +81,18 @@ useHead({
 
   <!-- <SystemsMarquee :label="HOME_COPY.systems.label" /> -->
 
-  <PainPoints
+  <AboutFold
+    :eyebrow="HOME_COPY.about.eyebrow"
+    :title="HOME_COPY.about.title"
+    :panels="ABOUT_PANELS"
+  />
+
+  <!-- <PainPoints
     :eyebrow="HOME_COPY.painPoints.eyebrow"
     :title="HOME_COPY.painPoints.title"
     :intro="HOME_COPY.painPoints.intro"
     :items="PAIN_POINTS"
-  />
+  /> -->
 
   <!-- <ServicesGrid :eyebrow="HOME_COPY.services.eyebrow" :items="SERVICES" /> -->
 
@@ -99,10 +111,7 @@ useHead({
     :examples="EXCEPTION_EXAMPLES"
   />
 
-  <IndustriesMarquee
-    :eyebrow="HOME_COPY.industries.eyebrow"
-    :title="HOME_COPY.industries.title"
-  />
+  <IndustriesMarquee :eyebrow="HOME_COPY.industries.eyebrow" :title="HOME_COPY.industries.title" />
 
   <HoursCalculator
     :eyebrow="HOME_COPY.calculator.eyebrow"
@@ -117,6 +126,8 @@ useHead({
     :title="HOME_COPY.proof.title"
     :items="PROOF_COMMITMENTS"
   />
+
+  <ContactPanel :copy="CONTACT_COPY" />
 
   <ProofStrip :items="TESTIMONIALS" />
 

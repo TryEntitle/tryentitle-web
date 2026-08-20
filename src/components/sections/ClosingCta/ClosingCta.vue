@@ -2,9 +2,14 @@
 /**
  * ClosingCta — Cream band (design spec §4.14, PRD FR13)
  *
- * Painted the same cream as the footer directly beneath it, so the ask and the
- * chrome read as one continuous sheet closing the page rather than a dark slab
- * dropped between the content and the footer.
+ * Cream stock. This used to match the footer directly beneath it so the two read
+ * as one continuous sheet; the footer is ink again, so the band now ends the
+ * PAPER part of the page and hands off to dark chrome at a stated edge (the
+ * footer draws the site's seal hairline across that join).
+ *
+ * Keep the two apart: a seam is two surfaces that almost match. Repainting this
+ * band toward the footer's ink — or the footer back toward cream — is what would
+ * make the boundary read as a mistake.
  *
  * The final ask. Oversized centred display headline, one sub-paragraph, the seal
  * pill, and an email alternative for the visitor who will not book a slot but
@@ -70,8 +75,8 @@ withDefaults(
 
 <style scoped>
 .closing-band {
-  /* Not the `bond` tone's own ground: this band has to match the footer exactly
-     or the join between them shows as a seam. */
+  /* Not the `bond` tone's own ground: one rung up the ladder, so the final ask
+     sits on a raised sheet rather than on the page itself. */
   background-color: var(--cream);
 }
 

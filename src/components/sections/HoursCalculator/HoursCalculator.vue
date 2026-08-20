@@ -2,9 +2,9 @@
 /**
  * HoursCalculator — Bond band, conversion panel (design spec §4.10)
  *
- * Consulting-landing layout: a large paper panel with inputs on the left and
- * live figures + booking CTA on the right. Arithmetic uses the visitor's OWN
- * inputs only — never a benchmark.
+ * Consulting-landing layout: a large INK panel on the light band, with inputs on
+ * the left and live figures + booking CTA on the right. Arithmetic uses the
+ * visitor's OWN inputs only — never a benchmark.
  *
  * Accessibility:
  * - Real <input type="range"> with <label>
@@ -154,7 +154,7 @@ watch(
 <template>
   <Section tone="bond" class="calc" labelledby="calc-title">
     <Container>
-      <div class="shell">
+      <div class="shell on-ink">
         <header class="shell__head">
           <Eyebrow>{{ eyebrow }}</Eyebrow>
           <Heading id="calc-title" :level="2" size="h2" class="shell__title">{{ title }}</Heading>
@@ -255,7 +255,6 @@ watch(
           </aside>
         </div>
       </div>
-
     </Container>
 
     <!--
@@ -295,7 +294,7 @@ watch(
         <p class="sheet__figure">{{ costLabel }} a year</p>
 
         <p class="sheet__note">{{ footnote }}</p>
-        <p class="sheet__foot">{{ SITE_URL }}  {{ CONTACT.general }}</p>
+        <p class="sheet__foot">{{ SITE_URL }} {{ CONTACT.general }}</p>
       </div>
     </Teleport>
   </Section>
@@ -313,15 +312,31 @@ watch(
     );
 }
 
+/*
+ * THE ONE DARK PANEL ON A LIGHT BAND.
+ *
+ * The band around it stays bond — the shell itself carries the ink ground, and
+ * with it the `.on-ink` class, so the eyebrow, heading, labels and rules inside
+ * resolve to their band-correct variants through the site's existing hook
+ * rather than through a set of dark overrides local to this file.
+ *
+ * The seal result card is unchanged and is the reason this works: orange on
+ * near-black is the strongest pairing the palette has, so the figure the whole
+ * section exists to produce now sits on the highest contrast on the page.
+ *
+ * The shadow is deeper and cooler than the paper version it replaces — a light
+ * panel needs a hint of lift, a dark one dropped onto warm paper needs to look
+ * like it is actually sitting above the page.
+ */
 .shell {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
   padding: clamp(1.5rem, 3vw, 3rem);
-  background-color: var(--bond-raised);
-  border: 1px solid color-mix(in srgb, var(--rule-on-bond) 80%, transparent);
+  background-color: var(--ink);
+  border: 1px solid var(--rule-on-ink);
   border-radius: 1.5rem;
-  box-shadow: 0 24px 60px rgba(15, 31, 26, 0.08);
+  box-shadow: var(--shadow-lift);
 }
 
 .shell__head {
@@ -332,7 +347,7 @@ watch(
 }
 
 .shell__title {
-  color: var(--text-on-bond);
+  color: var(--text-on-ink);
 }
 
 .shell__grid {
@@ -365,7 +380,7 @@ watch(
   flex-direction: column;
   gap: var(--space-3);
   padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--rule-on-bond);
+  border-bottom: 1px solid var(--rule-on-ink);
 }
 
 .field:last-child {
@@ -384,7 +399,7 @@ watch(
   font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: 600;
-  color: var(--text-on-bond);
+  color: var(--text-on-ink);
 }
 
 .field__value {
@@ -394,7 +409,9 @@ watch(
   font-weight: 600;
   letter-spacing: var(--tracking-display);
   font-variant-numeric: tabular-nums;
-  color: var(--seal-ink);
+  /* Full-strength seal, not `--seal-ink`: the darkened variant exists for light
+     bands and drops to ~2.2:1 here, while raw seal on ink measures 6.1:1. */
+  color: var(--seal);
 }
 
 .slider {
@@ -406,7 +423,7 @@ watch(
     to right,
     var(--seal) 0%,
     var(--seal) var(--fill, 50%),
-    color-mix(in srgb, var(--ink) 12%, var(--bond)) var(--fill, 50%)
+    color-mix(in srgb, var(--bond) 22%, transparent) var(--fill, 50%)
   );
   cursor: pointer;
 }
@@ -417,7 +434,7 @@ watch(
   height: 22px;
   border-radius: var(--radius-pill);
   background-color: var(--seal);
-  border: 3px solid var(--bond-raised);
+  border: 3px solid var(--ink);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--seal) 35%, transparent);
   cursor: grab;
 }
@@ -427,7 +444,7 @@ watch(
   height: 22px;
   border-radius: var(--radius-pill);
   background-color: var(--seal);
-  border: 3px solid var(--bond-raised);
+  border: 3px solid var(--ink);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--seal) 35%, transparent);
   cursor: grab;
 }

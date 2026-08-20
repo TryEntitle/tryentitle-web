@@ -27,6 +27,7 @@ export type IconName =
   | 'plus'
   | 'minus'
   | 'map'
+  | 'alert'
 
 export const ICON_PATHS: Record<IconName, string> = {
   'arrow-right': 'M5 12h14M13 6l6 6-6 6',
@@ -56,4 +57,6 @@ export const ICON_PATHS: Record<IconName, string> = {
   plus: 'M12 5v14M5 12h14',
   minus: 'M5 12h14',
   map: 'M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15',
+  /* Circled exclamation — inline form errors. Same 24×24 circle as `clock`. */
+  alert: 'M12 8v4.5M12 16v.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',
 }

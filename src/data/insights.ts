@@ -3,9 +3,7 @@
  * External cards never invent publishers or URLs; they link out to real sources.
  */
 
-export type InsightSource =
-  | { kind: 'tryentitle' }
-  | { kind: 'external'; name: string; url: string }
+export type InsightSource = { kind: 'tryentitle' } | { kind: 'external'; name: string; url: string }
 
 export interface Insight {
   id: string
@@ -14,7 +12,11 @@ export interface Insight {
   publishedAt: string
   readingMinutes: number
   source: InsightSource
-  /** Cover image under /public/images. */
+  /**
+   * Cover image under /public/images. Every cover is authored at 1600×900; the
+   * grid states those intrinsic dimensions, so a cover at another size will
+   * still display but stops guarding against layout shift.
+   */
   image: string
   imageAlt: string
   /** Trusted HTML rendered inside the reading modal. */
@@ -30,8 +32,9 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-06-12',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/insight-data-entry.jpg',
-    imageAlt: 'Desk with paperwork, calculator, and financial documents',
+    image: '/images/reduce-manual-data-entry.png',
+    imageAlt:
+      'Chart panel: a jagged line falling from a red MANUAL marker to a green REVIEWED one, over stage bars for retype, validate, extract and approve across sixteen weeks.',
     bodyHtml: `
 <p>Most “data entry problems” are not headcount problems. They are routing problems: the same fields get typed into three systems, nobody trusts the first pass, and the person who knows the exception is also the person stuck copying yesterday’s spreadsheet.</p>
 <p>Start by naming the work that should stay human. Exceptions, judgment calls, and client-facing follow-up belong with people. Volume typing, rekeying, and status chasing do not.</p>
@@ -52,8 +55,9 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-05-28',
     readingMinutes: 5,
     source: { kind: 'tryentitle' },
-    image: '/images/insight-ai-automation.jpg',
-    imageAlt: 'Developer working at a multi-monitor coding setup',
+    image: '/images/ai-vs-automation.png',
+    imageAlt:
+      'Chart panel: a stepped RULES line and a jittery MODEL band climbing together, over tracks labelled deterministic executes and probabilistic predicts, from scope to steady state.',
     bodyHtml: `
 <p>Teams often ask for “AI” when what they need is a reliable path from a document to a system of record. Those are different tools.</p>
 <p><strong>Automation</strong> is rules, integrations, and repeatable steps: if this form is complete, create that record; if this field fails validation, stop and ask a person. It is boring on purpose.</p>
@@ -79,8 +83,9 @@ export const INSIGHTS: Insight[] = [
       name: 'Harvard Business Review',
       url: 'https://hbr.org/2026/04/why-companies-that-choose-ai-augmentation-over-automation-may-win-in-the-long-run',
     },
-    image: '/images/insight-augmentation.jpg',
-    imageAlt: 'Team collaborating around a table with laptops',
+    image: '/images/ai-augmentation-vs-automation.png',
+    imageAlt:
+      'Chart panel: a widening green AUGMENT band rising toward a dashed capacity ceiling above a thin red REPLACE band, tracked from year zero to year four.',
     bodyHtml: `
 <p>Harvard Business Review frames a choice many operators feel on the ground: use AI mainly to cut labor, or use it to augment people so more work gets done well.</p>
 <p>That distinction matches how we design workflows. Extraction and routing can remove keystrokes; review, exceptions, and client judgment stay with staff. Augmentation is not soft language for “do nothing” — it is a decision about where judgment lives.</p>
@@ -95,8 +100,9 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-04-02',
     readingMinutes: 7,
     source: { kind: 'tryentitle' },
-    image: '/images/insight-processes.jpg',
-    imageAlt: 'Person reviewing charts and notes at a desk',
+    image: '/images/10-processes-to-automate.png',
+    imageAlt:
+      'Chart panel: ten coloured bars numbered 01 to 10, ranked from invoice intake at 92 per cent down to handoffs at 30 per cent.',
     bodyHtml: `
 <p>Automate the paths that are high volume, low judgment, and already written down somewhere. Leave the ones that need a person with the person.</p>
 <ol>
@@ -122,8 +128,9 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-03-18',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/insight-healthcare.jpg',
-    imageAlt: 'Clinician reviewing patient information on a tablet',
+    image: '/images/healthcare-patient-intake.png',
+    imageAlt:
+      'Chart panel: intake stages from arrival to roomed as paired bars under a falling line, marked minus fourteen minutes against a BEFORE baseline.',
     bodyHtml: `
 <p>Small practices rarely need a hospital-scale platform. They need fewer times the same insurance card and demographics get typed between portal, clipboard, and EHR.</p>
 <h2>Where minutes go</h2>
@@ -150,8 +157,9 @@ export const INSIGHTS: Insight[] = [
       name: 'Harvard Business Review',
       url: 'https://hbr.org/2026/02/whats-the-roi-on-ai',
     },
-    image: '/images/insight-roi-ai.jpg',
-    imageAlt: 'Analytics dashboard on a laptop screen',
+    image: '/images/whats-the-roi-on-ai.png',
+    imageAlt:
+      'Chart panel: returns scattered against model spend inside a widening band marked WIDE VARIANCE, over tracks for licences, integration and workflow redesign.',
     bodyHtml: `
 <p>Executives keep asking for AI ROI while still measuring vanity metrics — pilots launched, tools licensed — instead of hours removed from a named workflow or errors avoided on a named write.</p>
 <p>This HBR Executive Agenda piece is a useful external pulse on that gap. Our practical stance is narrower: define the process, the baseline hours, and the human review gate before you score the model.</p>
@@ -166,8 +174,9 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-01-22',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/insight-roi-ops.jpg',
-    imageAlt: 'Workspace with laptop showing charts and notes',
+    image: '/images/measure-roi-operations-project.png',
+    imageAlt:
+      'Chart panel: a cost curve crossing a dashed line at a marked break-even point and rising into hours moved and errors cut, from month zero to month twelve.',
     bodyHtml: `
 <p>Operations ROI fails when the baseline is vibes. Pick one workflow, measure it before you change it, then measure the same thing after.</p>
 <h2>What to count</h2>
