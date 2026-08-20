@@ -93,6 +93,18 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKeydown)
   setBackgroundInert(false)
 })
+
+/*
+ * Intrinsic size of every cover in /public/images — the set is authored at a
+ * uniform 1600×900. Stated on the <img> because Lighthouse CI fails the build on
+ * `unsized-images` (lighthouserc.json), and because a browser that knows the
+ * ratio reserves the box before the file lands.
+ *
+ * It is one constant rather than a per-post field: the covers are a single art
+ * set, and a cover that arrives at another size wants the whole set re-cut, not
+ * a second number in the data.
+ */
+const COVER = { width: 1600, height: 900 } as const
 </script>
 
 <template>
@@ -109,8 +121,27 @@ onBeforeUnmount(() => {
           :class="{ 'card--feature': index === 0 }"
           @click="open(insight, $event)"
         >
+          <!--
+            Decorative HERE, described in the reader. The card's accessible name
+            is already its title, so announcing a chart description before every
+            headline in the grid would make the list slower to scan by ear for no
+            added information. `insight.imageAlt` carries that description on the
+            same image inside the reader, where it is the only illustration.
+
+            The first card is the LCP element on /blog, so it loads eagerly at
+            high priority while the rest stay lazy.
+          -->
           <span class="card__media" aria-hidden="true">
-            <span class="card__logo" />
+            <img
+              class="card__img"
+              :src="insight.image"
+              alt=""
+              :width="COVER.width"
+              :height="COVER.height"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              decoding="async"
+            />
           </span>
 
           <span class="card__body">
@@ -147,7 +178,14 @@ onBeforeUnmount(() => {
             :aria-labelledby="`insight-title-${active.id}`"
           >
             <div class="reader__hero">
-              <div class="reader__logo" aria-hidden="true" />
+              <img
+                class="reader__img"
+                :src="active.image"
+                :alt="active.imageAlt"
+                :width="COVER.width"
+                :height="COVER.height"
+                decoding="async"
+              />
               <div class="reader__bar">
                 <p class="reader__meta">
                   <span class="card__source" :data-kind="active.source.kind">
@@ -258,8 +296,30 @@ onBeforeUnmount(() => {
   .card:focus-visible {
     transform: translateY(-4px);
   }
+
+  .card__media::after {
+    transition: opacity var(--duration-base) var(--ease-standard);
+  }
 }
 
+/*
+ * THE SCRIM.
+ *
+ * The covers are pale studio renders on near-white. Dropped in raw they read as
+ * washed-out rectangles that argue with the cream card body under them, and the
+ * seal rule between the two disappears against them. Tinting the art toward ink
+ * does three things at once: the tile now belongs to the same palette as the
+ * rest of the page, the seal rule reads as a bright edge again, and the colour
+ * left in the chart (which is the only saturated thing in the frame) becomes the
+ * subject rather than competing with the paper around it.
+ *
+ * It is a gradient, not a flat wash — heavier at the foot, where the tile meets
+ * the card body, and lighter at the head where the chart's own labels sit.
+ *
+ * Hover fades the whole layer with `opacity` rather than re-mixing the stops:
+ * animating a custom property through `color-mix` would need `@property`
+ * registration and recomputes the colour every frame, where this composites.
+ */
 .card__media {
   position: relative;
   display: block;
@@ -268,6 +328,34 @@ onBeforeUnmount(() => {
   background:
     radial-gradient(ellipse 70% 80% at 50% 45%, rgba(255, 106, 22, 0.14), transparent 62%),
     var(--ink);
+}
+
+.card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* Vignette first: the corners go to ink, the middle stays open, so the tile
+       reads as a lit subject rather than an evenly dimmed rectangle. */
+    radial-gradient(
+      ellipse 96% 82% at 50% 44%,
+      transparent 0%,
+      color-mix(in srgb, var(--ink) 44%, transparent) 100%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ink) 24%, transparent) 0%,
+      color-mix(in srgb, var(--ink) 34%, transparent) 55%,
+      color-mix(in srgb, color-mix(in srgb, var(--ink) 88%, var(--seal)) 68%, transparent) 100%
+    );
+}
+
+/* Lifting the scrim on hover is the same gesture as the 4% zoom below it: the
+   card opens up rather than lighting up. */
+.card:hover .card__media::after,
+.card:focus-visible .card__media::after {
+  opacity: 0.5;
 }
 
 .card--feature .card__media {
@@ -288,22 +376,37 @@ onBeforeUnmount(() => {
   }
 }
 
-.card__logo {
+/*
+ * The cover fills its frame regardless of the crop the card asks for — the grid
+ * uses three different aspect ratios (16:10, 21:9, and a full-height feature
+ * column) against one 16:9 source, so `cover` is doing real work here rather
+ * than guarding against a stray asset.
+ *
+ * The ink gradient behind it stays: it is what the card shows while a lazy
+ * image is still arriving, so the tile never flashes as an empty white box.
+ */
+.card__img {
   position: absolute;
   inset: 0;
-  background-image: url('/brand/logo-mark.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: min(38%, 7.5rem) auto;
-  opacity: 0.92;
-  transition: transform var(--duration-slow) var(--ease-standard), opacity var(--duration-fast)
-    var(--ease-standard);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /*
+   * The darkening happens HERE, not only in the scrim above.
+   *
+   * These renders are near-white, and ink laid over white mixes to grey — a
+   * scrim alone turned the tiles foggy rather than dark. Pulling the image's own
+   * brightness down first gives the scrim something dark to deepen instead of
+   * something bright to veil, and the saturation lift keeps the chart's colour
+   * (the only saturated thing in the frame) from going with it.
+   */
+  filter: brightness(0.72) contrast(1.12) saturate(1.22);
+  transition: transform var(--duration-slow) var(--ease-standard);
 }
 
-.card:hover .card__logo,
-.card:focus-visible .card__logo {
-  transform: scale(1.06);
-  opacity: 1;
+.card:hover .card__img,
+.card:focus-visible .card__img {
+  transform: scale(1.04);
 }
 
 .card__body {
@@ -400,6 +503,12 @@ onBeforeUnmount(() => {
   overflow: hidden;
 }
 
+/*
+ * Same tint as the grid tiles, and here it is doing a second job: the meta chip
+ * and the close button sit ON this banner, and against a pale render their own
+ * translucent backing was the only thing holding them up. Over an inked cover
+ * they have a ground again.
+ */
 .reader__hero {
   position: relative;
   flex-shrink: 0;
@@ -409,19 +518,37 @@ onBeforeUnmount(() => {
     var(--ink);
 }
 
-.reader__logo {
+.reader__hero::after {
+  content: '';
   position: absolute;
   inset: 0;
-  background-image: url('/brand/logo-mark.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto min(52%, 3.25rem);
-  opacity: 0.9;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ink) 46%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 30%, transparent) 100%
+  );
+}
+
+/* Anchored to the top of the frame: these covers carry their chart in the upper
+   two thirds, and a centred crop cut the labels off at this height. Same
+   darkening as the grid tiles — see `.card__img` for why it is a filter and not
+   only a scrim. */
+.reader__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: brightness(0.72) contrast(1.12) saturate(1.22);
   pointer-events: none;
 }
 
+/* Above the scrim — it is chrome on the banner, not part of the picture. */
 .reader__bar {
   position: absolute;
+  z-index: 1;
   inset: 0 0 auto;
   display: flex;
   align-items: flex-start;

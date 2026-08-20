@@ -8,9 +8,8 @@
 export const HOME_COPY = {
   hero: {
     eyebrow: '',
-    title: 'Workflows that move business forward.',
-    subhead:
-      'We map, build, and optimize custom AI & workflow automation systems for operations-heavy businesses.',
+    title: 'Innovative Operations Solutions',
+    subhead: 'We are passionate about creating innovative operation solutions that drive results.',
     /**
      * Micro-trust row along the base of the hero panel.
      *
@@ -24,6 +23,13 @@ export const HOME_COPY = {
 
   systems: {
     label: 'We plug into what you already run',
+  },
+
+  about: {
+    /* Eyebrow-only band: the three panel headings are the section's copy, so a
+       display heading above them would say the same thing a fourth time. */
+    eyebrow: 'About TryEntitle',
+    title: '',
   },
 
   painPoints: {
@@ -66,8 +72,7 @@ export const HOME_COPY = {
   calculator: {
     eyebrow: 'Cost calculator',
     title: '',
-    footnote:
-      "An estimate from your own inputs, not a benchmark  we'll pressure-test it against your real process on the call.",
+    footnote: 'Based on your numbers',
     /**
      * Slider labels. These were hardcoded in HoursCalculator, which put copy
      * inside a component against §11.3 rule 4 — they live here so relabelling an
@@ -91,7 +96,7 @@ export const HOME_COPY = {
      * naming one would be the invented-deliverable failure §10.2 bans.
      */
     capture: {
-      prompt: 'Not ready to book?',
+      prompt: '',
       emailLabel: 'Email me this estimate',
       pdfLabel: 'Save as PDF',
       emailSubject: 'My workflow cost estimate',

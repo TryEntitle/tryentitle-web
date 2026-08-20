@@ -25,44 +25,45 @@ export interface ServiceSummary {
 
 export const SERVICES: ServiceSummary[] = [
   {
-    slug: 'workflow-strategy-assessment',
-    name: 'Workflow Strategy Assessment',
-    headline: 'See where the time actually goes',
+    slug: 'Operations Assessment',
+    name: 'Operations Assessment',
+    headline: 'See what the work actually costs',
     summary:
-      'We follow one of your processes end to end and show you which steps to automate, which to fix, and which to leave alone.',
+      'We follow your operation end to end and show you where the time, the cost, and the capacity are going.',
     icon: 'map',
   },
   {
-    slug: 'workflow-agents',
-    name: 'Workflow Agents',
-    headline: 'The repetitive steps, handled',
-    summary: 'Automation that does the routine work and hands anything unusual to a person.',
+    slug: 'process-design-optimization',
+    name: 'Process Design & Optimization',
+    headline: 'Build Better Operations',
+    summary:
+      'We redesign how work gets done to remove bottlenecks, unnecessary steps, and the costs they create.',
     icon: 'repeat',
   },
   {
-    slug: 'document-operations',
-    name: 'Document Operations',
-    headline: 'Documents in, data out',
+    slug: 'Systems Integration',
+    name: 'Systems Integration',
+    headline: 'One connected operation',
+    summary: 'Your systems share information instead of being bridged by someone retyping it.',
+    icon: 'inbox',
+  },
+  {
+    slug: 'managed-operations',
+    name: 'Managed Operations',
+    headline: 'Keep Operations Performing',
     summary:
-      'Forms, PDFs, and emails become clean entries in your system without anyone retyping them.',
+      'Ongoing oversight that keeps the operation running well and improving after the project ends.',
     icon: 'document',
   },
   {
-    slug: 'customer-operations',
-    name: 'Customer Operations',
-    headline: 'Onboarding without the chase',
+    slug: 'operational-intelligence',
+    name: 'Operational Intelligence',
+    headline: 'Know how the operation is performing',
     summary:
-      'Intake, updates, and scheduling happen on their own, so nothing sits waiting on a follow-up.',
+      'Reporting built on live data, so cost, throughput, and bottlenecks are visible as they happen.',
     icon: 'users',
   },
-  {
-    slug: 'internal-operations',
-    name: 'Internal Operations',
-    headline: "Approvals that don't sit",
-    summary:
-      'Requests reach the right person, and the reports you rebuild every week build themselves.',
-    icon: 'inbox',
-  },
+
   {
     slug: 'integrations-process-intelligence',
     name: 'Integrations & Process Intelligence',
