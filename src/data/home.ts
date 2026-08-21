@@ -76,7 +76,6 @@ export const HOME_COPY = {
     /**
      * Slider labels. These were hardcoded in HoursCalculator, which put copy
      * inside a component against §11.3 rule 4 — they live here so relabelling an
-     * input never means editing markup.
      *
      * `unit` is what the value reads as to a screen reader ("20 people"), so it
      * stays a plain noun and does not repeat the label.
