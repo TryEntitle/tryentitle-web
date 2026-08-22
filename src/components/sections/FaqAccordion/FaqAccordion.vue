@@ -49,6 +49,7 @@ function toggle(index: number) {
             :title="title ?? ''"
             :level="level"
             title-id="faq-title"
+            class="faq-layout__title"
           />
           <RouterLink v-if="moreHref" :to="moreHref" class="faq-more">
             {{ moreLabel ?? 'See all questions' }}
@@ -112,14 +113,33 @@ function toggle(index: number) {
   }
 }
 
+/*
+ * One row: the heading on the left, the link to the full FAQ on its right, their
+ * bottoms aligned.
+ *
+ * `nowrap` is load-bearing. Under `wrap` a flex line breaks on the items'
+ * hypothetical sizes BEFORE any shrinking happens, so the link dropped to its
+ * own line at every width except tablet — the heading was never asked to give
+ * ground. Held on one line, the heading shrinks to its longest word instead and
+ * wraps its own text, which is what leaves room for the link.
+ */
 .faq-layout__head {
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: var(--space-5);
-  align-items: flex-start;
+}
+
+/* `min-width: 0` is what allows the shrink: without it the heading's automatic
+   minimum is its max-content width and the row overflows the column instead. */
+.faq-layout__title {
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .faq-more {
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -188,6 +208,7 @@ function toggle(index: number) {
   max-width: var(--measure);
   padding-bottom: 0;
   transition: padding-bottom var(--duration-slow) var(--ease-standard);
+  padding-left: var(--space-2);
 }
 
 .faq__answer.is-open .faq__answer-inner {
