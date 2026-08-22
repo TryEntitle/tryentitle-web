@@ -2,18 +2,20 @@
 /**
  * Hero — Bond band (PRD FR7)
  *
- * Full-bleed workspace photograph with a left paper panel: brand, headline,
- * supporting line, and the orange booking pill. Layout nods to consulting
- * landing pages (photo field + inset statement) without inventing a second CTA.
+ * Two-up split: a paper panel on the left carrying the headline, the supporting
+ * line, and the orange booking pill, with a full-bleed workspace photograph
+ * holding the right half. The copy aligns to the page container's left edge, so
+ * the headline starts on the same vertical as every section below it while the
+ * photo runs out to the viewport edge.
  *
  * Presentational — all copy arrives via props (PRD §11.3 rule 4). CTA stays
  * above the fold at 360×640 (FR7).
  */
 import { onMounted, ref } from 'vue'
 import Section from '@/components/primitives/Section'
-import Container from '@/components/primitives/Container'
 import Heading from '@/components/primitives/Heading'
 import BookingButton from '@/components/marketing/BookingButton'
+import { HERO_CTA_LABEL } from '@/lib/constants'
 import { splitLines } from '@/lib/motion/split'
 
 defineProps<{
@@ -42,21 +44,8 @@ onMounted(() => {
 
 <template>
   <Section as="section" tone="bond" class="hero" labelledby="hero-title">
-    <div class="hero__media" aria-hidden="true">
-      <img
-        class="hero__photo"
-        src="/images/hero-office.jpg"
-        alt=""
-        width="2400"
-        height="1600"
-        decoding="async"
-        fetchpriority="high"
-      />
-      <div class="hero__wash" />
-    </div>
-
-    <Container class="hero__frame">
-      <div ref="copy" class="hero__panel" :class="{ 'is-revealed': revealed }">
+    <div ref="copy" class="hero__panel" :class="{ 'is-revealed': revealed }">
+      <div class="hero__copy">
         <div class="hero__head hero__step" style="--i: 1">
           <Heading id="hero-title" :level="1" size="h1" class="hero__title">
             {{ title }}
@@ -64,14 +53,23 @@ onMounted(() => {
           <p class="hero__subhead">{{ subhead }}</p>
         </div>
 
-        <div class="hero__foot hero__step" style="--i: 2">
-          <ul v-if="meta?.length" class="hero__trust"></ul>
-          <div class="hero__actions">
-            <BookingButton placement="hero" size="lg" data-magnetic />
-          </div>
+        <div class="hero__actions hero__step" style="--i: 2">
+          <BookingButton placement="hero" size="lg" :label="HERO_CTA_LABEL" data-magnetic />
         </div>
       </div>
-    </Container>
+    </div>
+
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__photo"
+        src="/images/hero-tech.jpg"
+        alt=""
+        width="2400"
+        height="1598"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
   </Section>
 </template>
 
@@ -83,81 +81,31 @@ onMounted(() => {
   position: relative;
   isolation: isolate;
   overflow: clip;
-  /* Full-viewport banner under the sticky header.
-
-     The band is sized by `min-height` and centres its panel, so it deliberately
-     runs tighter than the standard rhythm — this padding is only the floor that
-     keeps the panel off the edges once the viewport is shorter than the banner.
-     Taken from the compact step rather than a one-off clamp so it still moves
-     with the rest of the scale. */
-  min-height: min(92vh, 52rem);
-  padding-block: var(--section-rhythm-compact);
-  display: flex;
-  align-items: center;
+  /* The band is a split, not a stack: the panel and the photo are the two grid
+     cells and each owns its own padding, so the section contributes none. */
+  padding-block: 0;
   background-color: var(--bond);
-}
-
-.hero__media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero__photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-/*
- * Soft paper wash so the photo reads bright and the panel stays legible.
- *
- * Even left to right, not the left-weighted ramp this had while the panel was an
- * inset card on the left third. The panel is translucent, so a sideways gradient
- * under a full-width card shows straight through it — the copy sat on bright
- * paper and the CTA end of the same card picked up the dark window frames behind
- * it. Only the vertical softening remains, which every column gets equally.
- */
-.hero__wash {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(244, 243, 241, 0.42) 0%,
-    rgba(244, 243, 241, 0.28) 38%,
-    rgba(244, 243, 241, 0.42) 100%
-  );
-}
-
-.hero__frame {
-  position: relative;
-  z-index: 1;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .hero__panel {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  /* Full container width — the panel is the band, not an inset card on it. */
-  width: 100%;
-  padding: clamp(1.5rem, 3vw, 2.75rem);
-  background-color: color-mix(in srgb, var(--bond-raised) 94%, transparent);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 1.5rem;
-  box-shadow: 0 24px 60px rgba(15, 31, 26, 0.12);
-  backdrop-filter: blur(8px);
+  align-items: center;
+  /* Left edge of the copy lines up with the page container, so the headline
+     starts on the same vertical as every section below the fold. `max()` hands
+     the gutter back once the viewport is narrower than the content measure. */
+  padding-inline-start: max(var(--gutter), calc((100vw - var(--content-max)) / 2 + var(--gutter)));
+  padding-inline-end: var(--gutter);
+  padding-block: var(--section-rhythm-compact);
 }
 
-.hero__brand {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: var(--tracking-display);
-  line-height: 1.05;
-  color: var(--seal);
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 34rem;
 }
 
 .hero__head {
@@ -168,16 +116,6 @@ onMounted(() => {
 .hero__title {
   max-width: 12ch;
   color: var(--text-on-bond);
-}
-
-.hero__foot {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-5);
-  margin-top: auto;
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--rule-on-bond);
 }
 
 .hero__subhead {
@@ -193,51 +131,35 @@ onMounted(() => {
   gap: var(--space-3);
 }
 
-/* The rule now belongs to the foot, which owns the whole base row. */
-.hero__trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-5);
+.hero__media {
+  position: relative;
+  overflow: clip;
 }
 
-.hero__trust li {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--text-on-bond-muted);
-  font-size: var(--text-body-sm);
+.hero__photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.hero__trust li::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  flex: none;
-  border-radius: var(--radius-pill);
-  background-color: var(--seal);
-}
-
-@media (min-width: 720px) {
-  .hero__foot {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-6);
+@media (min-width: 900px) {
+  .section.hero {
+    grid-template-columns: 51fr 49fr;
+    align-items: stretch;
+    min-height: min(88vh, 46rem);
   }
 
-  .hero__trust {
-    flex: 1;
-  }
-
-  .hero__actions {
-    flex: none;
-  }
-}
-
-@media (min-width: 1000px) {
   .hero__panel {
-    min-height: 24rem;
-    padding: var(--space-8);
+    /* Same container alignment, with a floor: once the viewport is only a little
+       wider than the content measure, the container gutter alone leaves the
+       headline hugging the band edge. */
+    padding-inline-start: max(
+      var(--space-8),
+      calc((100vw - var(--content-max)) / 2 + var(--gutter))
+    );
+    padding-inline-end: var(--space-8);
   }
 }
 
@@ -259,34 +181,16 @@ onMounted(() => {
     transform: scale(1.04);
     transition: transform 1.2s var(--ease-standard);
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
   .hero:has(.hero__panel.is-revealed) .hero__photo {
     transform: scale(1);
   }
 }
 
-@media (max-width: 719px) {
-  /* Matches the specificity of the base rule above, which it has to override. */
-  .section.hero {
-    min-height: auto;
-    align-items: flex-end;
-    padding-block: var(--section-rhythm-compact);
-  }
-
-  .hero__wash {
-    background: linear-gradient(
-      180deg,
-      transparent 18%,
-      rgba(244, 243, 241, 0.55) 48%,
-      rgba(244, 243, 241, 0.92) 100%
-    );
-  }
-
-  .hero__panel {
-    width: 100%;
-    border-radius: 1.25rem;
+@media (max-width: 899px) {
+  /* Stacked: copy first, then the photo as a band beneath it. */
+  .hero__media {
+    aspect-ratio: 3 / 2;
   }
 }
 </style>

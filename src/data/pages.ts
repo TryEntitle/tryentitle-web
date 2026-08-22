@@ -5,7 +5,8 @@
 export const SERVICES_PAGE = {
   eyebrow: 'Services',
   title: '',
-  intro: '',
+  intro:
+    "We help businesses run better. TryEntitle helps businesses find the parts of their operation that are costing them time and money, then improve the way that work gets done. We work across processes, systems, administrative work, and day-to-day operations to reduce unnecessary work, improve efficiency, and help businesses handle more without constantly adding people or overhead. We don't come in with a one-size-fits-all solution. We look at what is happening inside the business and focus on the areas where we can make a real difference.",
 } as const
 
 export const INDUSTRIES_PAGE = {

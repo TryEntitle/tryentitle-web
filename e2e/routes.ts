@@ -15,7 +15,7 @@
  * keeps these tests asserting what they are actually about: that the CTA is
  * reachable.
  */
-export { BOOKING_LABEL } from '../src/lib/constants'
+export { BOOKING_LABEL, HERO_CTA_LABEL } from '../src/lib/constants'
 
 export const SERVICE_SLUGS = [
   'workflow-strategy-assessment',

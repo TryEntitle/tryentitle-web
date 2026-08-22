@@ -2,116 +2,117 @@
 /**
  * AboutFold — who we are, immediately before "what we do" (design spec §4).
  *
- * LAYOUT — one sheet, folded twice. The three panels butt edge to edge inside a
- * single ruled frame rather than sitting as three separate cards, so the row
- * reads as one document opened out, not as a card grid the page already uses
- * twice below (PainPoints, ProofCommitments). The creases are real: each fold
- * carries a hairline plus a narrow shadow gradient on its leading edge, which is
- * what stops three flat panels from reading as a table.
+ * LAYOUT — one full-bleed band of three equal panels, butted edge to edge and
+ * running to both viewport edges with no frame, no gutters, and no radius. It
+ * meets the hero directly, so the page opens with two full-width bands rather
+ * than a banner followed by a card grid.
  *
- * COLOUR — the reference this replaces filled the first panel with full-strength
- * orange and stepped down through two greys. Spread across a third of the band
- * that is seal as a GROUND, which §"Accents" in tokens.css reserves for the one
- * payoff panel on the page. The step is kept and the intensity is not: the fold
- * climbs the surface ladder instead — `--seal-wash` → `--cream` → `--bond-raised`
- * — so the eye still moves left to right down a warm-to-white gradient at a
- * fraction of the volume, and the accent stays a mark (the filing tab above each
- * panel, the index rule) rather than a field.
+ * COLOUR — the panels step down a single ladder: full-strength seal, then two
+ * warm greys mixed from ink into bond. This is a DELIBERATE exception to the
+ * "one seal field per page" rule in tokens.css §Accents — the about band is now
+ * that one field, and the calculator that previously held it is not rendered on
+ * the home page. If the calculator comes back, this band and that panel have to
+ * be reconciled rather than both being allowed to stand.
+ *
+ * The greys are `color-mix` of ink into bond, not new hexes: they stay on the
+ * warm neutral the rest of the site uses, and a rebrand of either ground
+ * carries them. Body copy darkens on the grey panels because `--graphite`
+ * measures only 3.8:1 on the mid grey — under AA.
  *
  * Presentational; panels arrive via props (PRD §11.3 rule 3).
  */
 import Section from '@/components/primitives/Section'
-import Container from '@/components/primitives/Container'
-import SectionHeader from '@/components/sections/SectionHeader'
 import type { AboutPanel } from '@/data/about'
 
 defineProps<{
   eyebrow: string
   title?: string
-  intro?: string
   panels: readonly AboutPanel[]
 }>()
-
-/** Record-entry index — "01", not "1" — matching the markers used site-wide. */
-function marker(i: number): string {
-  return String(i + 1).padStart(2, '0')
-}
 </script>
 
 <template>
-  <Section v-if="panels.length" tone="bond" labelledby="about-title">
-    <Container>
-      <SectionHeader
-        :eyebrow="eyebrow"
-        :title="title ?? ''"
-        title-id="about-title"
-        :intro="intro"
-      />
+  <Section v-if="panels.length" tone="bond" class="about" labelledby="about-title">
+    <!--
+      The band carries no visible heading — the three panel titles are its copy.
+      This keeps the landmark named for assistive tech without printing a fourth
+      heading that says what the panels already say.
+    -->
+    <h2 id="about-title" class="visually-hidden">{{ title || eyebrow }}</h2>
 
-      <ul class="fold">
-        <li v-for="(panel, i) in panels" :key="panel.id" class="leaf" data-reveal>
-          <span class="leaf__tab" aria-hidden="true"></span>
-          <p class="leaf__index mono-label" aria-hidden="true">{{ marker(i) }}</p>
-          <h3 class="leaf__title">{{ panel.title }}</h3>
-          <p class="leaf__body">{{ panel.body }}</p>
-        </li>
-      </ul>
-    </Container>
+    <ul class="fold">
+      <li v-for="panel in panels" :key="panel.id" class="leaf" data-reveal>
+        <h3 class="leaf__title">{{ panel.title }}</h3>
+        <p class="leaf__body">{{ panel.body }}</p>
+      </li>
+    </ul>
   </Section>
 </template>
 
 <style scoped>
-/*
- * `gap: 0` and one shared frame — the panels are leaves of a single sheet, so
- * the separation between them is a fold line, not a gutter. `overflow: hidden`
- * lets each leaf's own surface run to the frame's rounded corners.
- */
+/* `.section.about`, not `.about`: Section owns the rhythm everywhere else, and
+   at equal specificity the winner would depend on stylesheet order. The band is
+   the panels themselves, so the section contributes no padding of its own. */
+.section.about {
+  padding-block: 0;
+}
+
 .fold {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  margin-top: var(--stack-lead);
   list-style: none;
+  margin: 0;
   padding: 0;
-  border: 1px solid var(--rule-on-bond);
-  border-radius: var(--radius-card);
-  overflow: hidden;
 }
 
 .leaf {
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-6) var(--space-5);
-  background-color: var(--leaf-surface, var(--cream));
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  background-color: var(--leaf-surface);
+  color: var(--leaf-body, var(--text-on-bond-muted));
 }
 
 /*
- * The tonal step, warm → white. Custom properties rather than three background
- * rules so the hover lift below can reference the same value.
+ * The tonal step: seal, then two rungs of warm grey. Custom properties rather
+ * than three background rules so the copy colours below can key off the same
+ * per-panel declaration.
  */
 .leaf:nth-child(1) {
-  --leaf-surface: var(--seal-wash);
+  --leaf-surface: var(--seal);
+  /* Ink on seal is 6.05:1. `--graphite` on seal is 2.3:1, so the muted body
+     colour used on the grey panels is not available here. */
+  --leaf-body: var(--ink);
 }
 
 .leaf:nth-child(2) {
-  --leaf-surface: var(--cream);
+  --leaf-surface: color-mix(in srgb, var(--ink) 14%, var(--bond));
+  --leaf-body: color-mix(in srgb, var(--graphite) 70%, var(--ink));
 }
 
 .leaf:nth-child(3) {
-  --leaf-surface: var(--bond-raised);
+  --leaf-surface: color-mix(in srgb, var(--ink) 5%, var(--bond));
+  --leaf-body: color-mix(in srgb, var(--graphite) 70%, var(--ink));
 }
 
-/* ─── The creases ────────────────────────────────────────────────────── */
-/*
- * Horizontal folds while the leaves are stacked. The shadow sits INSIDE the
- * leading edge of each panel, which is how a folded sheet actually catches
- * light — a symmetric divider would read as a border again.
- */
-.leaf + .leaf {
-  border-top: 1px solid var(--rule-on-bond);
-  background-image: linear-gradient(180deg, rgba(19, 26, 34, 0.045), transparent 14px);
+.leaf__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-heading);
+  color: var(--text-on-bond);
+}
+
+.leaf__body {
+  color: inherit;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  /* The column itself sets the measure — a third of the page is already close
+     to a comfortable line. This is only the ceiling for very wide viewports. */
+  max-width: 68ch;
 }
 
 @media (min-width: 900px) {
@@ -120,65 +121,7 @@ function marker(i: number): string {
   }
 
   .leaf {
-    padding: var(--space-7) var(--space-6);
+    padding: var(--space-7) var(--space-7) var(--space-8);
   }
-
-  .leaf + .leaf {
-    border-top: 0;
-    border-inline-start: 1px solid var(--rule-on-bond);
-    background-image: linear-gradient(90deg, rgba(19, 26, 34, 0.045), transparent 14px);
-  }
-}
-
-/* ─── Filing tab ─────────────────────────────────────────────────────── */
-/*
- * A seal mark, pinned to the top edge of its leaf and flush with the copy
- * column below it. It widens on hover — the only motion in the section, and
- * decorative, so nothing is communicated by it that the panel does not already
- * say in words.
- */
-.leaf__tab {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: var(--space-5);
-  width: 32px;
-  height: 3px;
-  background-color: var(--seal);
-}
-
-@media (min-width: 900px) {
-  .leaf__tab {
-    inset-inline-start: var(--space-6);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .leaf__tab {
-    transition: width var(--duration-base) var(--ease-standard);
-  }
-
-  .leaf:hover .leaf__tab {
-    width: 72px;
-  }
-}
-
-/* ─── Copy ───────────────────────────────────────────────────────────── */
-.leaf__index {
-  color: var(--text-on-bond-muted);
-}
-
-.leaf__title {
-  font-family: var(--font-display);
-  font-size: var(--text-h3);
-  font-weight: 600;
-  letter-spacing: var(--tracking-display);
-  line-height: var(--leading-heading);
-}
-
-.leaf__body {
-  color: var(--text-on-bond-muted);
-  font-size: var(--text-body-lg);
-  line-height: var(--leading-body);
-  max-width: 42ch;
 }
 </style>

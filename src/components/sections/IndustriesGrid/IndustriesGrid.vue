@@ -426,7 +426,12 @@ function fieldLabel(slug: string): string {
 
 .lead__deck {
   margin: 0;
-  max-width: 28ch;
+  /* The deck is ~93 characters, so a 28ch column set it as four short lines down
+     the left of a very wide seal panel. Half the string plus a little slack puts
+     it on two, and `balance` keeps those two lines even rather than leaving a
+     three-word orphan on the second. */
+  max-width: 50ch;
+  text-wrap: balance;
   font-size: var(--text-body);
   line-height: 1.5;
   /*

@@ -10,9 +10,9 @@
  *   1  Hero                         bond   comprehension in five seconds
  *   2  Systems marquee              ink    credibility + stack qualification
  *   3  About fold                   bond   who is asking, before what they do
- *   4  Cost of manual work          ink    agitate the pain, name the leaks
- *   5  Positioning contrast         bond   kill the "generic AI tool" objection
- *   6  Six core services            bond   scope clarity
+ *   4  Services rail                bond   scope clarity — the first three only
+ *   5  Cost of manual work          ink    agitate the pain, name the leaks
+ *   6  Positioning contrast         bond   kill the "generic AI tool" objection
  *   7  How an engagement runs       bond   de-risk the commitment
  *   8  Human oversight layer        ink    the differentiator
  *   9  Industries marquee           bond   self-identification (all fields)
@@ -31,6 +31,7 @@ import { useHead } from '@unhead/vue'
 
 import Hero from '@/components/sections/Hero'
 import AboutFold from '@/components/sections/AboutFold'
+import ServicesGrid from '@/components/sections/ServicesGrid'
 import PainPoints from '@/components/sections/PainPoints'
 import OversightLayer from '@/components/sections/OversightLayer'
 import IndustriesMarquee from '@/components/sections/IndustriesMarquee'
@@ -43,6 +44,7 @@ import ClosingCta from '@/components/sections/ClosingCta'
 
 import { HOME_COPY } from '@/data/home'
 import { ABOUT_PANELS } from '@/data/about'
+import { SERVICES } from '@/data/services'
 import { PAIN_POINTS } from '@/data/pain-points'
 import { PROOF_COMMITMENTS } from '@/data/proof'
 import { CONTACT_COPY } from '@/data/contact'
@@ -52,6 +54,13 @@ import { TESTIMONIALS } from '@/lib/proof'
 import { buildHead, jsonLd } from '@/lib/metadata'
 import { faqSchema, organizationSchema } from '@/lib/schema'
 import { SITE_TAGLINE } from '@/lib/constants'
+
+/**
+ * The home band teases the first three services; `/services` carries all six.
+ * Sliced here rather than in the component so the section stays presentational
+ * and the page keeps deciding what it shows (PRD §11.3 rule 3).
+ */
+const HOME_SERVICES = SERVICES.slice(0, 3)
 
 /** Concrete exception examples revealed from the oversight bar's gold segment. */
 const EXCEPTION_EXAMPLES = [
@@ -87,14 +96,14 @@ useHead({
     :panels="ABOUT_PANELS"
   />
 
+  <ServicesGrid :eyebrow="HOME_COPY.services.eyebrow" :items="HOME_SERVICES" />
+
   <!-- <PainPoints
     :eyebrow="HOME_COPY.painPoints.eyebrow"
     :title="HOME_COPY.painPoints.title"
     :intro="HOME_COPY.painPoints.intro"
     :items="PAIN_POINTS"
   /> -->
-
-  <!-- <ServicesGrid :eyebrow="HOME_COPY.services.eyebrow" :items="SERVICES" /> -->
 
   <!-- <ProcessRail
     :eyebrow="HOME_COPY.process.eyebrow"
@@ -121,11 +130,11 @@ useHead({
     :capture="HOME_COPY.calculator.capture"
   />
 
-  <ProofCommitments
+  <!-- <ProofCommitments
     :eyebrow="HOME_COPY.proof.eyebrow"
     :title="HOME_COPY.proof.title"
     :items="PROOF_COMMITMENTS"
-  />
+  /> -->
 
   <ContactPanel :copy="CONTACT_COPY" />
 

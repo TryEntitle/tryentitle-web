@@ -24,6 +24,16 @@ export const BOOKING_URL = 'https://calendly.com/tryentitle/workflow-review'
 export const BOOKING_LABEL = 'Book Now'
 
 /**
+ * Hero-only label for the same booking action.
+ *
+ * The hero opens the page, so it invites rather than instructs — every other
+ * placement keeps BOOKING_LABEL. Same destination either way; only the wording
+ * differs, and it lives here so the e2e suite binds to the constant instead of
+ * retyping the copy.
+ */
+export const HERO_CTA_LABEL = 'Get Started'
+
+/**
  * Contact addresses surfaced in legal pages and the footer.
  * Confirm these inboxes are monitored before launch (PRD D8).
  */
