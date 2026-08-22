@@ -341,13 +341,13 @@ const COVER = { width: 1600, height: 900 } as const
     radial-gradient(
       ellipse 96% 82% at 50% 44%,
       transparent 0%,
-      color-mix(in srgb, var(--ink) 15%, transparent) 100%
+      color-mix(in srgb, var(--ink) 44%, transparent) 100%
     ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--ink) 5%, transparent) 0%,
-      color-mix(in srgb, var(--ink) 8%, transparent) 55%,
-      color-mix(in srgb, color-mix(in srgb, var(--ink) 88%, var(--seal)) 30%, transparent) 100%
+      color-mix(in srgb, var(--ink) 24%, transparent) 0%,
+      color-mix(in srgb, var(--ink) 34%, transparent) 55%,
+      color-mix(in srgb, color-mix(in srgb, var(--ink) 88%, var(--seal)) 68%, transparent) 100%
     );
 }
 
@@ -392,20 +392,15 @@ const COVER = { width: 1600, height: 900 } as const
   height: 100%;
   object-fit: cover;
   /*
-   * The cover is shown at its own brightness. This carried `brightness(0.72)`
-   * for a long time, on the reasoning that the renders are near-white and ink
-   * laid over white mixes to grey, so a scrim alone would fog the tiles rather
-   * than darken them. The cost was that the art read as a dark plate rather than
-   * a picture, so both the filter and the scrim above have been lifted.
+   * The darkening happens HERE, not only in the scrim above.
    *
-   * What survives is the small contrast and saturation lift: it keeps the
-   * chart's colour — the only saturated thing in the frame — from washing out
-   * now that nothing is deepening it.
-   *
-   * If these ever need to go darker again, move the filter and the scrim
-   * TOGETHER. Dropping brightness alone is what produced the fog.
+   * These renders are near-white, and ink laid over white mixes to grey — a
+   * scrim alone turned the tiles foggy rather than dark. Pulling the image's own
+   * brightness down first gives the scrim something dark to deepen instead of
+   * something bright to veil, and the saturation lift keeps the chart's colour
+   * (the only saturated thing in the frame) from going with it.
    */
-  filter: brightness(1) contrast(1.04) saturate(1.12);
+  filter: brightness(0.72) contrast(1.12) saturate(1.22);
   transition: transform var(--duration-slow) var(--ease-standard);
 }
 
