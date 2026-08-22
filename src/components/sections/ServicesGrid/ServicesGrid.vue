@@ -304,6 +304,21 @@ function onKeydown(event: KeyboardEvent, index: number) {
 </template>
 
 <style scoped>
+/* ─── Header ───────────────────────────────────────────────────────────────
+   /services passes a full paragraph of lead copy, and the shared header sets its
+   lead column to 34ch — a measure meant for a one-line supporting note, which
+   set this as a narrow ribbon down the left of the band. Let it run a real
+   measure instead. `:deep` because SectionHeader owns these elements; the home
+   band passes no `intro`, so only the eyebrow sits in this column there and the
+   wider ceiling changes nothing. */
+.services :deep(.section-header__lead) {
+  max-width: none;
+}
+
+.services :deep(.section-header__intro) {
+  max-width: 72ch;
+}
+
 /* ─── Scroll wrapper ─────────────────────────────────────────────────────
    The wrapper is only tall when pinning is active. Unpinned it collapses to its
    content height and the stage stops sticking, which is exactly the reduced-motion

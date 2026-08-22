@@ -23,10 +23,9 @@
  * Link groups — Solutions, Industries, Company, Legal — are derived from the
  * canonical data model, so the footer can never drift from the source of truth.
  *
- * The newsletter strip opens the footer rather than occupying a band of its own.
- * A signup does not deserve a page section — it is the smallest possible ask, and
- * it belongs where a visitor who has finished reading is already looking. Sitting
- * above the hairline keeps it clear of the nav columns without adding a surface.
+ * The newsletter strip used to open this footer. It is now its own cream band
+ * directly above (NewsletterBand.vue): against a pure-black ground a form and a
+ * sitemap on one unbroken field stopped reading as two separate asks.
  *
  * Owns its own chrome spacing; it is not a page `Section` (PRD §12.4 concerns
  * page content bands, not header/footer chrome).
@@ -35,9 +34,7 @@ import { RouterLink } from 'vue-router'
 import Container from '@/components/primitives/Container'
 import Logo from '@/components/layout/Logo'
 import BookingButton from '@/components/marketing/BookingButton'
-import NewsletterSignup from '@/components/marketing/NewsletterSignup'
 import { FOOTER_GROUPS } from '@/data/navigation'
-import { NEWSLETTER_COPY } from '@/data/newsletter'
 import { SITE_TAGLINE } from '@/lib/constants'
 
 const year = new Date().getFullYear()
@@ -46,10 +43,6 @@ const year = new Date().getFullYear()
 <template>
   <footer class="footer on-ink">
     <Container>
-      <div class="footer__signup">
-        <NewsletterSignup :copy="NEWSLETTER_COPY" />
-      </div>
-
       <div class="footer__top">
         <div class="footer__brand">
           <RouterLink to="/" class="footer__logo" aria-label="TryEntitle — home">
@@ -82,7 +75,18 @@ const year = new Date().getFullYear()
 <style scoped>
 .footer {
   position: relative;
-  background-color: var(--ink);
+  /*
+   * Pure black, one rung below `--ink`. The footer is chrome, not a band: it
+   * sits under every page and closes the document, so it goes darker than the
+   * darkest ink band rather than matching it. A raw hex on purpose — this is
+   * not a fifth ground on the surface ladder in tokens.css and nothing else
+   * should reach for it.
+   *
+   * Everything inside is transparent-backed and coloured from the `.on-ink`
+   * tokens, so each of them only gains contrast against this: `--text-on-ink`
+   * goes 16:1 → 18.4:1, and `--seal` 6.4:1 → 7.4:1.
+   */
+  background-color: #000;
   color: var(--text-on-ink);
   /* The footer is not a Section, so it states its rhythm — but from the same
      scale, at the compact step, so it never lands between two of the steps. */
@@ -99,15 +103,6 @@ const year = new Date().getFullYear()
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--seal) 18%, var(--seal) 82%, transparent);
   pointer-events: none;
-}
-
-/* The strip and the columns below it are separated the way the bottom bar is —
-   same rule, same rhythm step — so the footer reads as three stacked registers
-   rather than as a form that wandered into the chrome. */
-.footer__signup {
-  padding-bottom: var(--stack-block);
-  margin-bottom: var(--stack-lead);
-  border-bottom: 1px solid var(--rule-on-ink);
 }
 
 .footer__top {

@@ -49,7 +49,7 @@ export const INDUSTRIES: IndustrySummary[] = [
       'Billing entry sync',
     ],
     outcome:
-      'Answer new leads in minutes instead of days, open matters without an attorney touching the setup, and stop losing billable hours to admin.',
+      'Streamline intake, matter setup, and administrative workflows so your team can spend less time on repetitive work and more time on clients.',
     icon: 'scale',
   },
   {
@@ -57,7 +57,7 @@ export const INDUSTRIES: IndustrySummary[] = [
     name: 'Insurance',
     workflows: ['Claims intake', 'Policy validation', 'Adjuster assignment', 'Renewal processing'],
     outcome:
-      'Turn same-day certificates into the norm, get renewals out ahead of the deadline, and retire the daily suspense list entirely.',
+      'Simplify repetitive processes, improve document workflows, and reduce the administrative work that slows down your team.',
     icon: 'shield',
   },
   {
@@ -70,7 +70,7 @@ export const INDUSTRIES: IndustrySummary[] = [
       'Recurring report generation',
     ],
     outcome:
-      'Get client documents in complete the first time, put more returns out the door per season, and stop the busy-season scramble for extra hands.',
+      'Make document collection, client communication, and recurring workflows easier to manage while reducing the manual work behind the scenes.',
     icon: 'calculator',
   },
   {
@@ -78,7 +78,7 @@ export const INDUSTRIES: IndustrySummary[] = [
     name: 'Real Estate',
     workflows: ['Transaction document handling', 'Client onboarding', 'Closing coordination'],
     outcome:
-      'Answer every lead the hour it comes in, keep deals on schedule without chasing, and stay compliant without the last-minute upload panic.',
+      'Improve lead response, tenant communication, maintenance workflows, and day-to-day property operations without adding more administrative work.',
     icon: 'building',
   },
   {
@@ -91,7 +91,7 @@ export const INDUSTRIES: IndustrySummary[] = [
       'Change order routing',
     ],
     outcome:
-      'Clear RFIs and submittals in days instead of weeks, keep draws on time with clean documentation, and stop rework from bad approvals.',
+      'Improve project workflows, reduce administrative bottlenecks, and keep documentation, approvals, and communication organized from start to finish.',
     icon: 'hardhat',
   },
   {

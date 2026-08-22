@@ -33,7 +33,15 @@ import Icon from '@/components/primitives/Icon'
 import { CONTACT } from '@/lib/constants'
 import type { NewsletterCopy } from '@/data/newsletter'
 
-const props = defineProps<{ copy: NewsletterCopy }>()
+const props = defineProps<{
+  copy: NewsletterCopy
+  /**
+   * id for the block's heading, so a host band can point `aria-labelledby` at
+   * it. Optional: inside a landmark that is already named (the footer) there is
+   * nothing to label.
+   */
+  titleId?: string
+}>()
 
 const email = ref('')
 const consent = ref(false)
@@ -80,7 +88,7 @@ function submit() {
 <template>
   <form class="signup" novalidate @submit.prevent="submit">
     <div class="signup__lead">
-      <h2 class="signup__title">{{ copy.title }}</h2>
+      <h2 :id="titleId" class="signup__title">{{ copy.title }}</h2>
       <!-- Guarded like `note` below: an empty copy string would still cost a
            line box and open a gap under the title. -->
       <p v-if="copy.body" class="signup__body">{{ copy.body }}</p>
@@ -384,6 +392,87 @@ function submit() {
 
 .on-ink .field {
   --field-error: var(--redline-text);
+}
+
+/* ─── On seal ────────────────────────────────────────────────────────── */
+/*
+ * The full-orange band (NewsletterBand.vue). Everything the paper treatment
+ * leans on either vanishes or fails here: `--seal` marks are the ground itself,
+ * and `--graphite` measures 2.3:1 on it. So on seal the whole block inverts —
+ * ink is the mark, and the accent is the ground.
+ *
+ * Ratios against `--seal` (#ff6a16, L 0.3165): ink 6.05:1, the 88% ink mix
+ * 5.3:1, the error mix 4.9:1. All AA at body size.
+ */
+.signup.on-seal {
+  /* The black pill. Flipping the action tokens rather than reaching for a second
+     Button variant keeps one action treatment on the site. */
+  --action: var(--ink);
+  --on-action: var(--bond);
+  /* Red cannot carry an error on orange — mixed far enough into ink to pass, it
+     stops reading as red at all. The alert icon beside the message is what says
+     "error"; this only has to be legible and distinct from body copy. */
+  --field-error: color-mix(in srgb, var(--redline) 25%, var(--ink));
+}
+
+.on-seal .signup__body,
+.on-seal .field__input::placeholder,
+.on-seal .note {
+  color: color-mix(in srgb, var(--ink) 88%, var(--seal));
+}
+
+.on-seal .field__input {
+  color: var(--text-on-bond);
+  border-bottom-color: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.on-seal .field__input:hover {
+  border-bottom-color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+
+/* The focus rule goes INK, not seal: on this ground the accent is invisible and
+   the ring would disappear exactly when it is needed. */
+.on-seal .field__input:focus-visible {
+  border-bottom-color: var(--ink);
+  box-shadow: 0 1px 0 0 var(--ink);
+}
+
+.on-seal .consent__box {
+  border-color: color-mix(in srgb, var(--ink) 45%, transparent);
+}
+
+.on-seal .consent__box:checked {
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+
+.on-seal .consent__box:focus-visible {
+  outline-color: var(--ink);
+}
+
+/* Same reason as the focus rule: `--seal-ink` is the paper variant of the accent
+   and both it and raw seal disappear into the ground. */
+.on-seal .req {
+  color: var(--ink);
+}
+
+/* `.field` redeclares `--field-error` on itself and the email message lives
+   INSIDE it, so the value has to be restated at that level too — same shape as
+   the `.on-ink .field` rule above. Setting it only on `.signup` reaches the
+   consent message and nothing else. */
+.on-seal .field {
+  --field-error: color-mix(in srgb, var(--redline) 25%, var(--ink));
+}
+
+.on-seal .note--error {
+  color: var(--field-error);
+}
+
+/* Button's own hover mixes `--action` toward ink, which on an ink pill is a
+   no-op — so the pill lifts toward paper instead. */
+.on-seal .btn--primary:hover,
+.on-seal .btn--primary:focus-visible {
+  background-color: color-mix(in srgb, var(--ink) 86%, var(--bond));
 }
 
 @media (prefers-reduced-motion: no-preference) {
