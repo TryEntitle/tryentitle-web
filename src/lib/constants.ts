@@ -12,7 +12,7 @@ export const SITE_URL = 'https://tryentitle.com'
 
 export const SITE_NAME = 'TryEntitle'
 
-export const SITE_TAGLINE = 'Workflows that move business forward'
+export const SITE_TAGLINE = 'Innovative, Operations, Solutions'
 
 /**
  * The single booking destination for the entire site.
