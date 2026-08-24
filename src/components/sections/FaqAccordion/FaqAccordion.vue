@@ -114,32 +114,27 @@ function toggle(index: number) {
 }
 
 /*
- * One row: the heading on the left, the link to the full FAQ on its right, their
- * bottoms aligned.
+ * Stacked: the heading first, the link to the full FAQ underneath it.
  *
- * `nowrap` is load-bearing. Under `wrap` a flex line breaks on the items'
- * hypothetical sizes BEFORE any shrinking happens, so the link dropped to its
- * own line at every width except tablet — the heading was never asked to give
- * ground. Held on one line, the heading shrinks to its longest word instead and
- * wraps its own text, which is what leaves room for the link.
+ * Sharing a row cost the heading its width — held on one flex line it shrank to
+ * its longest word and broke "Frequently asked questions" over three lines to
+ * leave room for the link. Below the heading the link costs nothing, so the
+ * heading keeps the whole column and wraps on its own terms.
  */
 .faq-layout__head {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-5);
 }
 
-/* `min-width: 0` is what allows the shrink: without it the heading's automatic
-   minimum is its max-content width and the row overflows the column instead. */
 .faq-layout__title {
-  flex: 0 1 auto;
-  min-width: 0;
+  max-width: 100%;
+  text-wrap: balance;
 }
 
 .faq-more {
-  flex: none;
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
