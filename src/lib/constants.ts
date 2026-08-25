@@ -14,11 +14,8 @@ export const SITE_NAME = 'TryEntitle'
 
 export const SITE_TAGLINE = 'Innovative, Operations, Solutions'
 
-/**
- * The single booking destination for the entire site.
- * [DECISION NEEDED · PRD D1] — replace <handle> with the real Calendly event.
- */
-export const BOOKING_URL = 'https://calendly.com/tryentitle/workflow-review'
+/** The single booking destination for the entire site (PRD D1, settled). */
+export const BOOKING_URL = 'https://calendly.com/tryentitle/30min'
 
 /** Human-readable label for the primary action, reused across placements. */
 export const BOOKING_LABEL = 'Book Now'
