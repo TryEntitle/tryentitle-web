@@ -1,6 +1,6 @@
 ---
-title: Workflow Strategy Assessment
-description: We map how work actually moves through your business and identify what should be automated, changed, or left alone.
+title: Operations Assessment
+description: We follow your operation end to end and show you where the time, the cost, and the capacity are going.
 order: 1
 ---
 

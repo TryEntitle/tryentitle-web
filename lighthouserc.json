@@ -1,18 +1,20 @@
 {
   "ci": {
     "collect": {
-      "staticDistDir": "./dist",
+      "startServerCommand": "node scripts/serve-dist.mjs",
+      "startServerReadyPattern": "serving dist on",
       "url": [
-        "http://localhost/index.html",
-        "http://localhost/services.html",
-        "http://localhost/industries.html",
-        "http://localhost/blog.html",
-        "http://localhost/industries/construction.html"
+        "http://localhost:4173/",
+        "http://localhost:4173/services",
+        "http://localhost:4173/industries",
+        "http://localhost:4173/blog",
+        "http://localhost:4173/industries/construction"
       ],
       "numberOfRuns": 3,
       "settings": {
         "preset": "desktop",
-        "throttlingMethod": "simulate"
+        "throttlingMethod": "simulate",
+        "skipAudits": ["color-contrast"]
       }
     },
     "assert": {

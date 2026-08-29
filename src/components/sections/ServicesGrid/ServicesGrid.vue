@@ -64,6 +64,16 @@ const progress = ref(0)
 
 const current = computed(() => props.items[active.value] ?? props.items[0])
 
+/**
+ * Each service sits one level under the section lead, in both renderings.
+ *
+ * The panel headline and the mobile cards were fixed at h3, which is right under
+ * the home band's h2 but skips a level on `/services`, where the lead is the
+ * page's h1. Deriving the level from the same prop keeps one outline for both
+ * placements instead of two that only agree by coincidence.
+ */
+const itemLevel = computed<2 | 3 | 4>(() => ((props.level ?? 2) + 1) as 2 | 3 | 4)
+
 function marker(i: number): string {
   return String(i + 1).padStart(2, '0')
 }
@@ -268,7 +278,9 @@ function onKeydown(event: KeyboardEvent, index: number) {
                 </span>
 
                 <p class="panel__eyebrow mono-label">{{ current.name }}</p>
-                <h3 class="panel__headline">{{ current.headline }}</h3>
+                <component :is="`h${itemLevel}`" class="panel__headline">{{
+                  current.headline
+                }}</component>
                 <p class="panel__body">{{ current.summary }}</p>
 
                 <div class="panel__action">
@@ -293,6 +305,7 @@ function onKeydown(event: KeyboardEvent, index: number) {
             :title="service.headline"
             :body="service.summary"
             :icon="service.icon"
+            :level="itemLevel"
             cta="See how it works"
             :to="`/services/${service.slug}`"
           />
@@ -523,9 +536,16 @@ function onKeydown(event: KeyboardEvent, index: number) {
   color: var(--seal-ink);
 }
 
+/* Typography pinned rather than inherited from the element, because the tag now
+   follows the section's heading level (h2 on /services, h3 under the home band)
+   and h1/h2 pick up the display face and its tighter display metrics. Same set
+   of properties FeatureCard pins on its own title, for the same reason. */
 .panel__headline {
+  font-family: var(--font-body);
   font-size: var(--text-h3);
   font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .panel__body {

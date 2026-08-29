@@ -3,8 +3,10 @@
  * SiteHeader
  *
  * Sticky site header (PRD FR1): logo (links home), primary nav, and the booking
- * CTA — visible at every scroll position. It collapses to a compact height after
- * ~80px of scroll so it stays out of the way without ever leaving.
+ * CTA. It collapses to a compact height after ~40px of scroll, and past
+ * HIDE_AFTER it retracts while the visitor reads downward, returning on the
+ * first upward frame — so the CTA is always one gesture away, never a scroll
+ * back to the top. See the guards in `onScrollFrame` below.
  *
  * The CTA is rendered as a BookingButton, visually distinct from nav links at
  * every breakpoint (PRD §6.1). On mobile the nav collapses into MobileNav; this

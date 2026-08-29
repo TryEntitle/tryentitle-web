@@ -1,6 +1,6 @@
 ---
-title: Customer Operations
-description: The work that happens around a customer — requests, follow-ups, status, scheduling.
+title: Managed Operations
+description: Ongoing oversight that keeps the operation running well and improving after the project ends.
 order: 4
 ---
 

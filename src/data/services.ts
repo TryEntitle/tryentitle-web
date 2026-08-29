@@ -25,7 +25,7 @@ export interface ServiceSummary {
 
 export const SERVICES: ServiceSummary[] = [
   {
-    slug: 'Operations Assessment',
+    slug: 'operations-assessment',
     name: 'Operations Assessment',
     headline: 'See what the work actually costs',
     summary:
@@ -41,7 +41,7 @@ export const SERVICES: ServiceSummary[] = [
     icon: 'repeat',
   },
   {
-    slug: 'Systems Integration',
+    slug: 'systems-integration',
     name: 'Systems Integration',
     headline: 'One connected operation',
     summary: 'Your systems share information instead of being bridged by someone retyping it.',
