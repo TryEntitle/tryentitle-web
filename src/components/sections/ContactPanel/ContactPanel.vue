@@ -35,7 +35,6 @@ import Eyebrow from '@/components/primitives/Eyebrow'
 import Heading from '@/components/primitives/Heading'
 import Button from '@/components/primitives/Button'
 import Icon from '@/components/primitives/Icon'
-import BookingButton from '@/components/marketing/BookingButton'
 import { CONTACT } from '@/lib/constants'
 import type { ContactCopy } from '@/data/contact'
 
@@ -154,6 +153,9 @@ function submit() {
             </a>
 
             <p class="rail__label mono-label rail__label--alt">{{ copy.altPrompt }}</p>
+            <!-- Parked, not dropped. Restoring this line also means restoring
+                 the BookingButton import above — an import with no live use
+                 fails lint. -->
             <!-- <BookingButton placement="contact" variant="secondary" /> -->
           </div>
         </div>

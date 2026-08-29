@@ -30,7 +30,6 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import Section from '@/components/primitives/Section'
 import Container from '@/components/primitives/Container'
-import Chip from '@/components/primitives/Chip'
 import Icon from '@/components/primitives/Icon'
 import Button from '@/components/primitives/Button'
 import FeatureCard from '@/components/sections/FeatureCard'
