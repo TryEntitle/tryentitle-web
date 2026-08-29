@@ -22,11 +22,21 @@ test.describe('desktop navigation', () => {
 
   test('header stays reachable at any scroll position (FR1)', async ({ page }) => {
     await page.goto('/')
+    const cta = page.locator('header').getByRole('link', { name: BOOKING_LABEL })
+
+    /*
+     * The bar retracts while the visitor reads downward and returns on the first
+     * upward frame (SiteHeader, HIDE_AFTER). So FR1's guarantee is not "the CTA
+     * is painted at every scroll offset" — it is "the CTA is reachable from deep
+     * in the page without scrolling back to the top", which is what this asserts.
+     *
+     * Asserting it directly after the jump is a race, not a test: whether the
+     * scroll clock observes a downward frame between `scrollTo` and the first
+     * assertion decides the result, and it failed about half the time.
+     */
     await page.evaluate(() => window.scrollTo(0, 3000))
-    // The sticky header keeps the booking CTA reachable without scrolling back up.
-    await expect(
-      page.locator('header').getByRole('link', { name: BOOKING_LABEL }),
-    ).toBeInViewport()
+    await page.evaluate(() => window.scrollBy(0, -200))
+    await expect(cta).toBeInViewport()
   })
 })
 

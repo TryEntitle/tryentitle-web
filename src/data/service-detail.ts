@@ -25,7 +25,7 @@ export interface ServiceDetail {
 
 export const SERVICE_DETAIL: ServiceDetail[] = [
   {
-    slug: 'workflow-strategy-assessment',
+    slug: 'operations-assessment',
     industries: ['healthcare', 'accounting', 'professional-services'],
     useCases: [
       {
@@ -79,7 +79,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     ],
   },
   {
-    slug: 'workflow-agents',
+    slug: 'process-design-optimization',
     industries: ['insurance', 'construction', 'healthcare'],
     useCases: [
       {
@@ -133,7 +133,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     ],
   },
   {
-    slug: 'document-operations',
+    slug: 'systems-integration',
     industries: ['healthcare', 'legal', 'accounting'],
     useCases: [
       {
@@ -187,7 +187,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     ],
   },
   {
-    slug: 'customer-operations',
+    slug: 'managed-operations',
     industries: ['real-estate-property-management', 'professional-services', 'insurance'],
     useCases: [
       {
@@ -241,7 +241,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     ],
   },
   {
-    slug: 'internal-operations',
+    slug: 'operational-intelligence',
     industries: ['accounting', 'legal', 'construction'],
     useCases: [
       {

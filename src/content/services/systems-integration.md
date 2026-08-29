@@ -1,6 +1,6 @@
 ---
-title: Document Operations
-description: Intake, extraction, validation, and filing for the documents your business runs on.
+title: Systems Integration
+description: Your systems share information instead of being bridged by someone retyping it.
 order: 3
 ---
 

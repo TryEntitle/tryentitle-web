@@ -18,7 +18,7 @@
  * and the user has not asked for reduced motion — so touch and reduced-motion
  * users never pay for it.
  *
- * @example <Card to="/services/document-operations"><h3>…</h3></Card>
+ * @example <Card to="/services/systems-integration"><h3>…</h3></Card>
  */
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'

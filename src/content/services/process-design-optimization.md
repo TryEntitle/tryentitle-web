@@ -1,6 +1,6 @@
 ---
-title: Workflow Agents
-description: Automated steps that carry work between systems and people, with defined handoffs when judgment is required.
+title: Process Design & Optimization
+description: We redesign how work gets done to remove bottlenecks, unnecessary steps, and the costs they create.
 order: 2
 ---
 

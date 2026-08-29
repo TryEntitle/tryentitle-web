@@ -60,7 +60,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Nothing clinical is automated. A person reviews anything that affects care, and any prior-auth denial or claim discrepancy reaches your team with the packet already assembled — not left to be rebuilt from scratch.',
-    services: ['document-operations', 'workflow-agents', 'customer-operations'],
+    services: ['systems-integration', 'process-design-optimization', 'managed-operations'],
     useCases: [
       {
         title: 'Prior-authorization packets',
@@ -148,7 +148,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Legal judgment stays with your attorneys. We assemble, organize, and route; an attorney reviews anything substantive before it goes out, and any conflict or missing detail is surfaced for a person rather than assumed away.',
-    services: ['document-operations', 'workflow-agents', 'internal-operations'],
+    services: ['systems-integration', 'process-design-optimization', 'operational-intelligence'],
     useCases: [
       {
         title: 'Matter intake and conflict checks',
@@ -236,7 +236,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Coverage decisions and advice stay with your licensed staff. The forms and follow-ups run on their own; anything that changes an exposure, or a submission a carrier questions, goes to a producer with the file already in hand.',
-    services: ['document-operations', 'workflow-agents', 'integrations-process-intelligence'],
+    services: ['systems-integration', 'process-design-optimization', 'integrations-process-intelligence'],
     useCases: [
       {
         title: 'ACORD form intake',
@@ -324,7 +324,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Every return and reconciliation is reviewed and signed off by your staff. The system gathers, organizes, and flags exceptions; it does not make an accounting judgment, and an item that does not tie out is sent to a person, not forced to balance.',
-    services: ['document-operations', 'internal-operations', 'workflow-agents'],
+    services: ['systems-integration', 'operational-intelligence', 'process-design-optimization'],
     useCases: [
       {
         title: 'Client source documents',
@@ -412,7 +412,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Approvals — a tenant application, a lease term, a vendor for a repair — stay with your team. The paperwork is assembled and routed; a person decides, and any incomplete file or urgent maintenance issue is escalated rather than left in a queue.',
-    services: ['document-operations', 'customer-operations', 'workflow-agents'],
+    services: ['systems-integration', 'managed-operations', 'process-design-optimization'],
     useCases: [
       {
         title: 'Closing binders and transaction files',
@@ -500,7 +500,7 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     ],
     human:
       'Approvals on a draw or a change order stay with your project managers. The system tracks, assembles, and chases; a person approves, and any missing waiver or lapsed certificate is raised before it holds up a payment — not discovered after.',
-    services: ['document-operations', 'workflow-agents', 'integrations-process-intelligence'],
+    services: ['systems-integration', 'process-design-optimization', 'integrations-process-intelligence'],
     useCases: [
       {
         title: 'Lien waivers',
@@ -589,8 +589,8 @@ export const INDUSTRY_DETAIL: IndustryDetail[] = [
     human:
       'Scope, pricing, and client judgment stay with your team. The documents assemble and route themselves; a person approves anything that commits the firm, and a stalled onboarding or an unusual time entry is surfaced rather than passed through silently.',
     services: [
-      'customer-operations',
-      'internal-operations',
+      'managed-operations',
+      'operational-intelligence',
       'integrations-process-intelligence',
     ],
     useCases: [

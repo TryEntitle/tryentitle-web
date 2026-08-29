@@ -1,6 +1,6 @@
 ---
-title: Internal Operations
-description: Approvals, reporting, reconciliation, and the handoffs between your own teams.
+title: Operational Intelligence
+description: Reporting built on live data, so cost, throughput, and bottlenecks are visible as they happen.
 order: 5
 ---
 

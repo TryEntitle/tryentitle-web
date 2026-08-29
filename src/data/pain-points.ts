@@ -23,22 +23,22 @@ export interface PainPoint {
 
 export const PAIN_POINTS: PainPoint[] = [
   {
-    id: 'workflow-strategy-assessment',
+    id: 'operations-assessment',
     label: 'Workflow strategy assessment',
     symptom:
       "We map how work moves through your business today and identify exactly where it's getting stuck",
     icon: 'map',
     stat: '60-90 minutes',
-    to: '/services/workflow-strategy-assessment',
+    to: '/services/operations-assessment',
   },
   {
-    id: 'document-operations',
+    id: 'systems-integration',
     label: 'Document operations',
     symptom:
       'PDFs, forms, and emails get converted into clean, structured data in your system automatically',
     icon: 'document',
     stat: '5-10 minutes per document',
-    to: '/services/document-operations',
+    to: '/services/systems-integration',
   },
   {
     id: 'client-case-onboarding',
@@ -46,7 +46,7 @@ export const PAIN_POINTS: PainPoint[] = [
     symptom: 'New client or case intake runs end to end without manual chasing',
     icon: 'users',
     stat: '1-2 hours',
-    to: '/services/customer-operations',
+    to: '/services/managed-operations',
   },
   {
     id: 'approval-and-routing',
@@ -54,7 +54,7 @@ export const PAIN_POINTS: PainPoint[] = [
     symptom: 'Requests reach the right person automatically, with a clear record of every decision',
     icon: 'check',
     stat: '1-2 days',
-    to: '/services/internal-operations',
+    to: '/services/operational-intelligence',
   },
   {
     id: 'reporting-and-data-sync',
@@ -62,7 +62,7 @@ export const PAIN_POINTS: PainPoint[] = [
     symptom: 'Reports pull from live data instead of a manual weekly build',
     icon: 'activity',
     stat: '5-10 minutes per report',
-    to: '/services/internal-operations',
+    to: '/services/operational-intelligence',
   },
   {
     id: 'integration-and-process-intelligence',

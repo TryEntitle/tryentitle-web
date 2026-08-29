@@ -18,11 +18,11 @@
 export { BOOKING_LABEL, HERO_CTA_LABEL } from '../src/lib/constants'
 
 export const SERVICE_SLUGS = [
-  'workflow-strategy-assessment',
-  'workflow-agents',
-  'document-operations',
-  'customer-operations',
-  'internal-operations',
+  'operations-assessment',
+  'process-design-optimization',
+  'systems-integration',
+  'managed-operations',
+  'operational-intelligence',
   'integrations-process-intelligence',
 ]
 
