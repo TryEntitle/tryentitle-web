@@ -24,6 +24,12 @@
  *  15  FAQ                          bond   clear final objections
  *  16  Closing CTA                  ink    book the call
  *
+ * PARKED — commented out in the template below, not deleted: the systems
+ * marquee, services rail, cost of manual work, process rail, proof commitments,
+ * and the closing CTA. Their imports and data are removed alongside them,
+ * because an import with no live use fails lint; bringing a section back means
+ * bringing its import (and its data) back with it.
+ *
  * Data is resolved here and passed down as props so every section stays
  * presentational and testable from a fixture (PRD §11.3 rule 3).
  */
@@ -31,22 +37,15 @@ import { useHead } from '@unhead/vue'
 
 import Hero from '@/components/sections/Hero'
 import AboutFold from '@/components/sections/AboutFold'
-import ServicesGrid from '@/components/sections/ServicesGrid'
-import PainPoints from '@/components/sections/PainPoints'
 import OversightLayer from '@/components/sections/OversightLayer'
 import IndustriesMarquee from '@/components/sections/IndustriesMarquee'
 import HoursCalculator from '@/components/sections/HoursCalculator'
-import ProofCommitments from '@/components/sections/ProofCommitments'
 import ContactPanel from '@/components/sections/ContactPanel'
 import ProofStrip from '@/components/sections/ProofStrip'
 import FaqAccordion from '@/components/sections/FaqAccordion'
-import ClosingCta from '@/components/sections/ClosingCta'
 
 import { HOME_COPY } from '@/data/home'
 import { ABOUT_PANELS } from '@/data/about'
-import { SERVICES } from '@/data/services'
-import { PAIN_POINTS } from '@/data/pain-points'
-import { PROOF_COMMITMENTS } from '@/data/proof'
 import { CONTACT_COPY } from '@/data/contact'
 import { HOME_FAQ } from '@/data/faq'
 import { TESTIMONIALS } from '@/lib/proof'
@@ -54,13 +53,6 @@ import { TESTIMONIALS } from '@/lib/proof'
 import { buildHead, jsonLd } from '@/lib/metadata'
 import { faqSchema, organizationSchema } from '@/lib/schema'
 import { SITE_TAGLINE } from '@/lib/constants'
-
-/**
- * The home band teases the first three services; `/services` carries all six.
- * Sliced here rather than in the component so the section stays presentational
- * and the page keeps deciding what it shows (PRD §11.3 rule 3).
- */
-const HOME_SERVICES = SERVICES.slice(0, 3)
 
 /** Concrete exception examples revealed from the oversight bar's gold segment. */
 const EXCEPTION_EXAMPLES = [

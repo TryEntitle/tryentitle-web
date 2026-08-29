@@ -15,9 +15,8 @@ import Container from '@/components/primitives/Container'
 import Card from '@/components/primitives/Card'
 import Icon from '@/components/primitives/Icon'
 import Button from '@/components/primitives/Button'
-import BookingButton from '@/components/marketing/BookingButton'
 import SectionHeader from '@/components/sections/SectionHeader'
-import { INDUSTRIES, type IndustrySummary } from '@/data/industries'
+import type { IndustrySummary } from '@/data/industries'
 
 const props = withDefaults(
   defineProps<{
@@ -47,12 +46,6 @@ const defaultAside = computed(() =>
     : 'A sample of the fields we know the paperwork of. Open one for the workflows — or see the full list.',
 )
 
-/** Full catalog index so FIELD 01–07 stay stable even when home shows a subset. */
-const fieldNumber = computed(() => {
-  const map = new Map(INDUSTRIES.map((item, i) => [item.slug, i + 1]))
-  return (slug: string) => map.get(slug) ?? 0
-})
-
 const featured = computed(() => (props.variant === 'cards' ? props.items[0] : undefined))
 const rest = computed(() => (props.variant === 'cards' ? props.items.slice(1) : []))
 
@@ -62,10 +55,6 @@ function toggle(index: number) {
 
 function marker(i: number): string {
   return String(i + 1).padStart(2, '0')
-}
-
-function fieldLabel(slug: string): string {
-  return marker(fieldNumber.value(slug) - 1)
 }
 </script>
 
