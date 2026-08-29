@@ -8,9 +8,9 @@
  * gutter, so the pair reads as one object — the same "one sheet, folded" device
  * the about fold uses, at the scale of a panel.
  *
- * The rail is ruled like a pad (a repeating hairline, masked away at the foot).
- * That is the whole decoration: on a page whose argument is "auditable process",
- * a contact block should look like a form on a desk, not like a hero.
+ * The rail carries no decoration — flat ink, and the type does the work. On a
+ * page whose argument is "auditable process", a contact block should look like a
+ * form on a desk, not like a hero.
  *
  * WHERE THE MESSAGE GOES. There is no form handler — the site is a static build
  * and the CSP permits `form-action 'self'` only. A form posting nowhere would
@@ -253,28 +253,6 @@ function submit() {
   padding: clamp(1.75rem, 3vw, 3rem);
   background-color: var(--ink);
   color: var(--text-on-ink);
-  isolation: isolate;
-}
-
-/*
- * The ruled pad. A repeating hairline at roughly the body line-height, masked
- * away before it reaches either end so the rules read as paper texture rather
- * than as a table someone forgot to fill in.
- */
-.rail::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: repeating-linear-gradient(
-    180deg,
-    var(--rule-on-ink) 0 1px,
-    transparent 1px 2.25rem
-  );
-  opacity: 0.5;
-  -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 62%, transparent 92%);
-  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 62%, transparent 92%);
-  pointer-events: none;
 }
 
 .rail__lead {
@@ -400,10 +378,9 @@ function submit() {
 }
 
 /*
- * A ruled line, not a boxed input — the reference's underline, kept because it
- * matches the pad the rail is drawing beside it. The rule is the element's own
- * bottom border so it stays put under autofill, and it thickens to seal on
- * focus rather than moving anything.
+ * A ruled line, not a boxed input — the reference's underline. The rule is the
+ * element's own bottom border so it stays put under autofill, and it thickens to
+ * seal on focus rather than moving anything.
  */
 .field__input {
   width: 100%;
