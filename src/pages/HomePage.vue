@@ -96,7 +96,7 @@ useHead({
     :panels="ABOUT_PANELS"
   />
 
-  <ServicesGrid :eyebrow="HOME_COPY.services.eyebrow" :items="HOME_SERVICES" />
+  <!-- <ServicesGrid :eyebrow="HOME_COPY.services.eyebrow" :items="HOME_SERVICES" /> -->
 
   <!-- <PainPoints
     :eyebrow="HOME_COPY.painPoints.eyebrow"
