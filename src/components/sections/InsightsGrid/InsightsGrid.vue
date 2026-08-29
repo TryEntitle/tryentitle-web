@@ -238,6 +238,13 @@ const COVER = { width: 1600, height: 900 } as const
 </template>
 
 <style scoped>
+/* One value for both places a cover appears — the grid tile and the reader
+   banner — so the art never sits at two different strengths across the click. */
+.grid,
+.scrim {
+  --cover-opacity: 0.85;
+}
+
 .grid {
   display: grid;
   gap: var(--space-5);
@@ -296,29 +303,16 @@ const COVER = { width: 1600, height: 900 } as const
   .card:focus-visible {
     transform: translateY(-4px);
   }
-
-  .card__media::after {
-    transition: opacity var(--duration-base) var(--ease-standard);
-  }
 }
 
 /*
- * THE SCRIM.
+ * The ink ground under the cover. No overlay sits on top of the art any more —
+ * this layer only shows THROUGH it, at the 15% the image's own opacity leaves
+ * open (see `.card__img`), which is what keeps the tile in the page's palette
+ * and the seal rule below it reading as a bright edge.
  *
- * The covers are pale studio renders on near-white. Dropped in raw they read as
- * washed-out rectangles that argue with the cream card body under them, and the
- * seal rule between the two disappears against them. Tinting the art toward ink
- * does three things at once: the tile now belongs to the same palette as the
- * rest of the page, the seal rule reads as a bright edge again, and the colour
- * left in the chart (which is the only saturated thing in the frame) becomes the
- * subject rather than competing with the paper around it.
- *
- * It is a gradient, not a flat wash — heavier at the foot, where the tile meets
- * the card body, and lighter at the head where the chart's own labels sit.
- *
- * Hover fades the whole layer with `opacity` rather than re-mixing the stops:
- * animating a custom property through `color-mix` would need `@property`
- * registration and recomputes the colour every frame, where this composites.
+ * It is also what the card shows while a lazy cover is still arriving, so the
+ * tile never flashes as an empty white box.
  */
 .card__media {
   position: relative;
@@ -328,34 +322,6 @@ const COVER = { width: 1600, height: 900 } as const
   background:
     radial-gradient(ellipse 70% 80% at 50% 45%, rgba(255, 106, 22, 0.14), transparent 62%),
     var(--ink);
-}
-
-.card__media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    /* Vignette first: the corners go to ink, the middle stays open, so the tile
-       reads as a lit subject rather than an evenly dimmed rectangle. */
-    radial-gradient(
-      ellipse 96% 82% at 50% 44%,
-      transparent 0%,
-      color-mix(in srgb, var(--ink) 44%, transparent) 100%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--ink) 24%, transparent) 0%,
-      color-mix(in srgb, var(--ink) 34%, transparent) 55%,
-      color-mix(in srgb, color-mix(in srgb, var(--ink) 88%, var(--seal)) 68%, transparent) 100%
-    );
-}
-
-/* Lifting the scrim on hover is the same gesture as the 4% zoom below it: the
-   card opens up rather than lighting up. */
-.card:hover .card__media::after,
-.card:focus-visible .card__media::after {
-  opacity: 0.5;
 }
 
 .card--feature .card__media {
@@ -382,8 +348,6 @@ const COVER = { width: 1600, height: 900 } as const
  * column) against one 16:9 source, so `cover` is doing real work here rather
  * than guarding against a stray asset.
  *
- * The ink gradient behind it stays: it is what the card shows while a lazy
- * image is still arriving, so the tile never flashes as an empty white box.
  */
 .card__img {
   position: absolute;
@@ -392,15 +356,20 @@ const COVER = { width: 1600, height: 900 } as const
   height: 100%;
   object-fit: cover;
   /*
-   * The darkening happens HERE, not only in the scrim above.
-   *
-   * These renders are near-white, and ink laid over white mixes to grey — a
-   * scrim alone turned the tiles foggy rather than dark. Pulling the image's own
-   * brightness down first gives the scrim something dark to deepen instead of
-   * something bright to veil, and the saturation lift keeps the chart's colour
-   * (the only saturated thing in the frame) from going with it.
+   * All of the darkening happens HERE, on the image itself — there is no scrim
+   * over the art. These renders are near-white, and ink laid over white mixes
+   * to grey, so a covering layer turned the tiles foggy rather than dark. The
+   * brightness cut does the work instead, and the saturation lift keeps the
+   * chart's colour (the only saturated thing in the frame) from going with it.
    */
   filter: brightness(0.72) contrast(1.12) saturate(1.22);
+  /*
+   * Held back off full strength so the ink ground behind it reads through the
+   * render rather than being covered by it — the cover sits in the card's
+   * palette instead of on top of it. Paired with the filter above: brightness
+   * darkens the art, this settles it into the tile.
+   */
+  opacity: var(--cover-opacity);
   transition: transform var(--duration-slow) var(--ease-standard);
 }
 
@@ -504,10 +473,10 @@ const COVER = { width: 1600, height: 900 } as const
 }
 
 /*
- * Same tint as the grid tiles, and here it is doing a second job: the meta chip
- * and the close button sit ON this banner, and against a pale render their own
- * translucent backing was the only thing holding them up. Over an inked cover
- * they have a ground again.
+ * Same ink ground as the grid tiles, and here it is doing a second job: the meta
+ * chip and the close button sit ON this banner, and against a pale render their
+ * own translucent backing was the only thing holding them up. Over an inked
+ * cover they have a ground again.
  */
 .reader__hero {
   position: relative;
@@ -518,22 +487,10 @@ const COVER = { width: 1600, height: 900 } as const
     var(--ink);
 }
 
-.reader__hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--ink) 46%, transparent) 0%,
-    color-mix(in srgb, var(--ink) 30%, transparent) 100%
-  );
-}
-
 /* Anchored to the top of the frame: these covers carry their chart in the upper
    two thirds, and a centred crop cut the labels off at this height. Same
-   darkening as the grid tiles — see `.card__img` for why it is a filter and not
-   only a scrim. */
+   darkening as the grid tiles — see `.card__img` for why it is a filter on the
+   art rather than a layer over it. */
 .reader__img {
   position: absolute;
   inset: 0;
@@ -542,10 +499,11 @@ const COVER = { width: 1600, height: 900 } as const
   object-fit: cover;
   object-position: 50% 30%;
   filter: brightness(0.72) contrast(1.12) saturate(1.22);
+  opacity: var(--cover-opacity);
   pointer-events: none;
 }
 
-/* Above the scrim — it is chrome on the banner, not part of the picture. */
+/* Above the cover — it is chrome on the banner, not part of the picture. */
 .reader__bar {
   position: absolute;
   z-index: 1;

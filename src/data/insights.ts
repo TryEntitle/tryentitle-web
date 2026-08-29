@@ -16,6 +16,12 @@ export interface Insight {
    * Cover image under /public/images. Every cover is authored at 1600×900; the
    * grid states those intrinsic dimensions, so a cover at another size will
    * still display but stops guarding against layout shift.
+   *
+   * WebP, not the PNG master. These are flat chart renders, so the PNG exports
+   * ran ~1.5 MB each — seven of them on one grid — where the same frame at WebP
+   * q82 is ~35 KB with no visible loss. Re-export a replaced cover the same way
+   * (`ffmpeg -i cover.png -c:v libwebp -quality 82 -preset picture cover.webp`)
+   * rather than pointing this field back at a PNG.
    */
   image: string
   imageAlt: string
@@ -32,7 +38,7 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-06-12',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/reduce-manual-data-entry.png',
+    image: '/images/reduce-manual-data-entry.webp',
     imageAlt:
       'Chart panel: a jagged line falling from a red MANUAL marker to a green REVIEWED one, over stage bars for retype, validate, extract and approve across sixteen weeks.',
     bodyHtml: `
@@ -55,7 +61,7 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-05-28',
     readingMinutes: 5,
     source: { kind: 'tryentitle' },
-    image: '/images/ai-vs-automation.png',
+    image: '/images/ai-vs-automation.webp',
     imageAlt:
       'Chart panel: a stepped RULES line and a jittery MODEL band climbing together, over tracks labelled deterministic executes and probabilistic predicts, from scope to steady state.',
     bodyHtml: `
@@ -83,7 +89,7 @@ export const INSIGHTS: Insight[] = [
       name: 'Harvard Business Review',
       url: 'https://hbr.org/2026/04/why-companies-that-choose-ai-augmentation-over-automation-may-win-in-the-long-run',
     },
-    image: '/images/ai-augmentation-vs-automation.png',
+    image: '/images/ai-augmentation-vs-automation.webp',
     imageAlt:
       'Chart panel: a widening green AUGMENT band rising toward a dashed capacity ceiling above a thin red REPLACE band, tracked from year zero to year four.',
     bodyHtml: `
@@ -100,7 +106,7 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-04-02',
     readingMinutes: 7,
     source: { kind: 'tryentitle' },
-    image: '/images/10-processes-to-automate.png',
+    image: '/images/10-processes-to-automate.webp',
     imageAlt:
       'Chart panel: ten coloured bars numbered 01 to 10, ranked from invoice intake at 92 per cent down to handoffs at 30 per cent.',
     bodyHtml: `
@@ -128,7 +134,7 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-03-18',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/healthcare-patient-intake.png',
+    image: '/images/healthcare-patient-intake.webp',
     imageAlt:
       'Chart panel: intake stages from arrival to roomed as paired bars under a falling line, marked minus fourteen minutes against a BEFORE baseline.',
     bodyHtml: `
@@ -157,7 +163,7 @@ export const INSIGHTS: Insight[] = [
       name: 'Harvard Business Review',
       url: 'https://hbr.org/2026/02/whats-the-roi-on-ai',
     },
-    image: '/images/whats-the-roi-on-ai.png',
+    image: '/images/whats-the-roi-on-ai.webp',
     imageAlt:
       'Chart panel: returns scattered against model spend inside a widening band marked WIDE VARIANCE, over tracks for licences, integration and workflow redesign.',
     bodyHtml: `
@@ -174,7 +180,7 @@ export const INSIGHTS: Insight[] = [
     publishedAt: '2026-01-22',
     readingMinutes: 6,
     source: { kind: 'tryentitle' },
-    image: '/images/measure-roi-operations-project.png',
+    image: '/images/measure-roi-operations-project.webp',
     imageAlt:
       'Chart panel: a cost curve crossing a dashed line at a marked break-even point and rising into hours moved and errors cut, from month zero to month twelve.',
     bodyHtml: `

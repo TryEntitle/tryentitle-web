@@ -23,6 +23,18 @@ useHead(
     image: '/og/blog.png',
   }),
 )
+
+/*
+ * The lead card's cover is the LCP element here, and the grid marks it
+ * `fetchpriority="high"` — but the browser only learns that once the page's JS
+ * has mounted the grid. Preloading it from the prerendered <head> starts the
+ * request in the first round trip instead. Not a meta tag, so it sits outside
+ * `buildHead()` (see lib/metadata.ts) rather than growing PageMeta.
+ */
+const leadCover = insightsNewestFirst[0]?.image
+useHead({
+  link: leadCover ? [{ rel: 'preload', as: 'image', href: leadCover, fetchpriority: 'high' }] : [],
+})
 </script>
 
 <template>
