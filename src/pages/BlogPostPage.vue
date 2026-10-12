@@ -60,7 +60,6 @@ useHead(head)
       :breadcrumbs="[{ label: 'Blog', to: '/blog' }, { label: post.frontmatter.title }]"
       uppercase-title
       :title="post.frontmatter.title"
-      :lead="post.frontmatter.description"
       :html="post.html"
       :toc="post.toc"
     >

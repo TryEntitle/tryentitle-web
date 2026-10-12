@@ -3,8 +3,13 @@
  * ArticleLayout
  *
  * Shared reading layout for every long-form detail page — services, industries,
- * blog posts, and legal documents. Renders a breadcrumb, a page header (eyebrow,
- * h1, lead), an optional table of contents, and the rendered document in Prose.
+ * blog posts, and legal documents. Renders a breadcrumb, a page header, an
+ * optional table of contents, and the rendered document in Prose.
+ *
+ * The header carries the title and nothing else. It used to repeat the
+ * document's `description` as a standing line underneath — the same sentence
+ * already serving as the page's meta description — which pushed the document's
+ * own opening paragraph below the fold and said it twice.
  *
  * Presentational: all content arrives via props (PRD §11.3 rule 3). The `meta`
  * slot carries page-specific chrome (e.g. a blog date/reading-time line).
@@ -34,7 +39,6 @@ const props = withDefaults(
     title: string
     /** Sets the title in caps — the industry pages' treatment. */
     uppercaseTitle?: boolean
-    lead?: string
     html: string
     toc?: TocEntry[]
   }>(),
@@ -66,7 +70,6 @@ const showToc = computed(() => props.toc.length > 2)
             :class="{ 'article-head__title--upper': uppercaseTitle }"
             >{{ title }}</Heading
           >
-          <p v-if="lead" class="article-head__lead">{{ lead }}</p>
           <div class="article-head__meta">
             <slot name="meta" />
           </div>
@@ -141,17 +144,24 @@ const showToc = computed(() => props.toc.length > 2)
   text-transform: uppercase;
 }
 
-.article-head__lead {
-  font-size: var(--text-body-lg);
-  color: var(--text-on-bond-muted);
-}
-
 .article-head__meta:empty {
   display: none;
 }
 
 .article-body {
   margin-top: var(--stack-lead);
+}
+
+/*
+ * Below 960px there is no sidebar column — the contents list is just a block
+ * above the article. It was sticky at every width, so on a phone it pinned
+ * itself to the top of the viewport and the body text scrolled underneath it.
+ * It only sticks where it has a column of its own to stick in, which is the
+ * same rule the service pages already follow.
+ */
+.toc {
+  position: static;
+  margin-bottom: var(--stack-block);
 }
 
 @media (min-width: 960px) {
@@ -161,11 +171,12 @@ const showToc = computed(() => props.toc.length > 2)
     gap: var(--space-8);
     align-items: start;
   }
-}
 
-.toc {
-  position: sticky;
-  top: calc(var(--header-height) + var(--space-4));
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+    margin-bottom: 0;
+  }
 }
 
 .toc__label {

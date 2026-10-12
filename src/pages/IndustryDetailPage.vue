@@ -56,7 +56,6 @@ useHead(head)
       :breadcrumbs="[{ label: 'Industries', to: '/industries' }, { label: doc.frontmatter.title }]"
       :title="doc.frontmatter.title"
       uppercase-title
-      :lead="doc.frontmatter.description"
       :html="doc.html"
     />
     <ClosingCta :title="CLOSING.title" :body="CLOSING.body" placement="industry-detail" />
