@@ -28,8 +28,17 @@ export const createApp = ViteSSG(
     routes,
     scrollBehavior(to, _from, savedPosition) {
       if (savedPosition) return savedPosition
+      // In-page jumps (the contents rail) glide; the reader stays in one document.
       if (to.hash) return { el: to.hash, behavior: 'smooth' }
-      return { top: 0 }
+      /*
+       * `instant`, explicitly: globals.css sets `scroll-behavior: smooth` on the
+       * root, which applied to this jump too. Opening a new page from the footer
+       * while far down a long one animated the whole distance — about a second
+       * of the new page gliding upward before it settled at the top, which read
+       * as the page not starting at the top at all. A navigation is a new
+       * document, so it starts where a document starts.
+       */
+      return { top: 0, behavior: 'instant' }
     },
   },
   ({ router }) => {
@@ -55,7 +64,17 @@ export const createApp = ViteSSG(
         }
         requestAnimationFrame(() => {
           const main = document.getElementById('main')
-          main?.focus()
+          /*
+           * `preventScroll` matters: focusing an element scrolls it into view,
+           * and that fought `scrollBehavior`'s `{ top: 0 }` above. On a phone,
+           * where the landmark's position is still settling when this runs (the
+           * covers and the sheet scene have not laid out yet), the browser
+           * scrolled to wherever <main> was at that instant — so a footer link
+           * opened the new page a few hundred pixels down, and /privacy opened
+           * it 2300px down. Focus still moves for keyboard and screen-reader
+           * users; it just no longer moves the viewport with it.
+           */
+          main?.focus({ preventScroll: true })
 
           /*
            * Route entrance: displace the landmark, then release it on the next
