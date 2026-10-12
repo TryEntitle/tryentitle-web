@@ -10,6 +10,7 @@
  */
 import { RouterView } from 'vue-router'
 import { Analytics } from '@vercel/analytics/vue'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 import SkipToContent from '@/components/layout/SkipToContent'
 import SiteHeader from '@/components/layout/SiteHeader'
 import NewsletterBand from '@/components/layout/NewsletterBand'
@@ -40,6 +41,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
   <NewsletterBand />
   <SiteFooter />
   <Analytics />
+  <SpeedInsights />
 </template>
 
 <style scoped>
