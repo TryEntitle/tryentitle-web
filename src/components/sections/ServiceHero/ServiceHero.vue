@@ -22,7 +22,7 @@
  *
  * Presentational — all copy arrives via props (PRD §11.3 rule 4).
  */
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import Section from '@/components/primitives/Section'
 import Container from '@/components/primitives/Container'
@@ -37,7 +37,7 @@ interface Crumb {
   to?: string
 }
 
-defineProps<{
+const props = defineProps<{
   breadcrumbs: Crumb[]
   title: string
   /** The outcome, in the customer's terms — the band's supporting line. */
@@ -52,17 +52,45 @@ defineProps<{
 const revealed = ref(false)
 const panel = ref<HTMLElement | null>(null)
 
-onMounted(() => {
-  requestAnimationFrame(() => (revealed.value = true))
-
-  // Split after the webfont lands, or the measured lines belong to the fallback.
+/**
+ * Split the service name into masked lines for the entrance.
+ *
+ * Deferred until the webfont lands, or the measured line breaks belong to the
+ * fallback face.
+ */
+function splitHeading(): void {
   void (document.fonts?.ready ?? Promise.resolve()).then(() => {
     const heading = panel.value?.querySelector('h1')
     if (heading && splitLines(heading)) {
       requestAnimationFrame(() => heading.classList.add('is-split-in'))
     }
   })
+}
+
+onMounted(() => {
+  requestAnimationFrame(() => (revealed.value = true))
+  splitHeading()
 })
+
+/*
+ * Re-split when the service changes.
+ *
+ * `splitLines` replaces the <h1>'s children with its own line spans, so the
+ * element Vue thinks holds `{{ title }}` is no longer the element on screen.
+ * Moving between two service pages reuses this component (same route record),
+ * and the patch for the new title had nothing it recognised to update: the
+ * heading kept the PREVIOUS service's name until a reload, while the breadcrumb
+ * and the outcome line beside it updated correctly.
+ *
+ * The `:key` on the Heading is the other half — it hands back a fresh, unsplit
+ * element for the new title, which this then splits again.
+ */
+watch(
+  () => props.title,
+  () => {
+    void nextTick(splitHeading)
+  },
+)
 </script>
 
 <template>
@@ -79,6 +107,7 @@ onMounted(() => {
         </nav>
 
         <Heading
+          :key="title"
           id="service-title"
           :level="1"
           size="h1"
