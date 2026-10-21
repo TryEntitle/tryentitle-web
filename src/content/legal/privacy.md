@@ -1,132 +1,103 @@
 ---
 title: Privacy Policy
-description: How TryEntitle collects, uses, and retains personal data.
-updatedAt: '2026-08-05'
+description: How TryEntitle collects, uses, and protects information across the website, the client portal, and project work.
+updatedAt: '2026-10-15'
 reviewed: true
 ---
 
-## Scope
+This policy explains how TryEntitle LLC, a Maryland limited liability company ("TryEntitle," "we," "us"), collects, uses, and protects information when you visit tryentitle.com, use our client portal, or work with us on workflow redesign and automation projects (together, the "Service"). We build systems that touch our clients' documents and data, so we treat that information with care.
 
-This Privacy Policy explains how TryEntitle, a workflow redesign and automation
-firm operating the website at https://tryentitle.com ("TryEntitle," "we," "us,"
-or "our"), collects, uses, and shares personal information when you visit our
-website, book a workflow review, or become a client.
+## 1. Information we collect
 
-It applies to website visitors, prospects, and clients. TryEntitle is the data
-controller for the personal information described here unless a client
-engagement or Data Processing Agreement says otherwise.
+**Account information.** Your name, business name, email address, and role, provided when you request a call, sign a contract, or log in to the client portal. [CONFIRM: passwordless sign-in or passwords. If you use Supabase Auth with passwords, say we store them only in hashed form.]
 
-## What we collect
+**Billing information.** Payments are processed by a third-party payment processor. We keep a customer reference, invoices, and payment history, but we never see or store full card numbers. [CONFIRM: processor name, e.g., Stripe.]
 
-We collect only the following:
+**Project information.** Details about your business that you share so we can scope and deliver work: workflow descriptions, process maps, tool access, and similar materials.
 
-- **Contact and booking data:** when you book a workflow review through our
-  online scheduling tool, we receive your name, email address, and any other
-  details you submit in the booking form (including optional notes or
-  cost-calculator context passed into the booking).
-- **Email correspondence:** if you email hello@tryentitle.com,
-  privacy@tryentitle.com, or security@tryentitle.com, we process the content of
-  that correspondence and the metadata needed to reply.
-- **Technical logs:** our website hosting provider may automatically process
-  standard request logs such as IP address, user agent, and timestamps to
-  operate and secure the site.
+**Content in your systems.** Documents, records, and data that our automations create, process, or move on your behalf. This is your content, and we handle it only as described in Section 3.
 
-We do not currently run a marketing newsletter signup, and we do not currently
-load third-party analytics cookies. If that changes, we will update this policy
-before introducing those tools.
+**Business contact information from public sources.** To find businesses that may benefit from our services, we collect publicly available business information such as business name, website, address, business phone number, and business email address. We use it only to contact that business about our services, and we honor opt-out requests promptly.
 
-We do not intentionally collect special-category personal data through this
-website. Client engagements involving regulated document workflows are governed
-by the engagement agreement and, where applicable, our
-Data Processing Agreement.
+**Communications.** Emails, messages, call notes, and recordings you share with us, such as a discovery call or a support request. We record calls only with notice.
 
-## How we use information
+**Usage and device data.** Pages viewed, timestamps, browser and device type, IP address, and diagnostic logs from our website and portal.
 
-We use personal information to:
+**Cookies and analytics.** Essential cookies keep you signed in.
 
-- respond to inquiries and schedule workflow reviews;
-- prepare for and deliver client engagements you request;
-- operate, secure, and improve the website;
-- comply with legal obligations; and
-- establish, exercise, or defend legal claims.
+## 2. How we use information
 
-We do not sell personal information.
+- Provide, operate, and improve the Service, including scoping, building, and maintaining your workflows and automations.
+- Authenticate you and keep your account and portal secure.
+- Process billing and issue invoices.
+- Communicate with you about projects, support, and account or security matters.
+- Reach out to businesses that may benefit from our services, in line with applicable law, including the CAN-SPAM Act.
+- Detect, prevent, and investigate abuse, fraud, and security incidents.
+- Debug and improve the reliability and performance of our systems.
+- Meet our legal, tax, and accounting obligations.
 
-## Lawful basis
+We do not sell your personal information. We do not use your content, or the data your automations process, to train AI models.
 
-Where UK GDPR / EU GDPR applies, we process personal information on these bases:
+## 3. Your content and your systems
 
-- **Booking and inquiry data:** steps taken at your request before entering a
-  contract (Art. 6(1)(b)) and our legitimate interest in responding to
-  prospective clients (Art. 6(1)(f)).
-- **Client engagement data:** performance of a contract and related legitimate
-  interests in delivering the services.
-- **Security and hosting logs:** legitimate interests in keeping the site secure
-  and available.
-- **Legal compliance:** where processing is necessary to comply with a legal
-  obligation (Art. 6(1)(c)).
+You decide what we can reach. We work inside your documents, tools, and accounts only to the extent the project requires, and we ask for the narrowest access that gets the job done.
 
-Where other data protection laws apply (including applicable US state privacy
-laws), we process personal information for the purposes disclosed above and as
-those laws require.
+We access the content inside your systems only when:
 
-## Retention
+- you ask us to, or the project scope requires it;
+- it is necessary to operate, secure, or protect the Service; or
+- we are required to by law.
 
-- **Scheduler / inquiry data:** kept for 24 months after your last interaction
-  with us, then deleted or anonymized, unless a longer period is required for an
-  active engagement, dispute, or legal obligation.
-- **Email correspondence:** kept as long as needed to complete the conversation
-  and up to 24 months afterward, subject to the same exceptions.
-- **Hosting logs:** kept according to our hosting provider's standard log
-  retention, typically no longer than needed for security and operations.
+**When we build for you.** If we build a website, chatbot, or workflow that collects information from your own customers or staff, you are the owner of that data and responsible for your own privacy notice and legal basis for collecting it. We handle it on your behalf and under your instructions, and we are glad to sign a data processing agreement if you need one.
 
-At the end of each period, we delete or irreversibly anonymize the data in
-systems we control.
+**Regulated information.** Unless we have signed a written agreement that says otherwise, TryEntitle is not a HIPAA business associate and does not accept protected health information. [CONFIRM: if you take healthcare or legal clients, decide whether you will ever sign a BAA before using this sentence.] Please do not send us protected health information, Social Security numbers, or payment card numbers unless we have agreed in writing how they will be handled.
 
-## Third-party processors
+## 4. How we share information
 
-| Processor type | Role | Location |
-| --- | --- | --- |
-| Scheduling provider | Scheduling and booking forms | United States (with appropriate transfer safeguards) |
-| Website hosting provider | Website hosting and content delivery | United States / global edge network |
+We share limited data with companies that help us run the Service ("subprocessors"), under terms that require appropriate safeguards. They fall into these groups:
 
-Each processor is used only for the purposes described above. This list is kept
-consistent with the [Security](/security) page and Annex 2 of the
-Data Processing Agreement. Client engagements may involve additional
-subprocessors, disclosed in that engagement's DPA annex.
+- **Hosting and infrastructure.** Servers, databases, authentication, and storage behind our website, portal, and automations.
+- **Payments.** Billing, subscriptions, and invoicing.
+- **AI providers.** Only when an automation or chatbot we build for you uses an AI model.
+- **Email and communications.** Sending project updates, invitations, and account notices, and hosting scheduled calls and video messages.
+- **Productivity and project tools.** Document storage, e-signature, and task tracking we use to deliver your project.
+- **Analytics and support.** Understanding how the website is used and catching errors.
 
-## International transfers
+We may also share information to comply with the law, enforce our agreements, or protect the rights, safety, and security of TryEntitle, our clients, and the public. If TryEntitle is involved in a merger, acquisition, or sale of assets, information may transfer as part of that transaction, and we will notify you of any change in control.
 
-If personal information is transferred outside the UK or EEA (for example, to
-our scheduling or hosting providers in the United States), we rely on
-appropriate safeguards such as Standard Contractual Clauses, the UK
-International Data Transfer Addendum, or another lawful transfer mechanism
-recognized under applicable law.
+We do not sell personal information, and we do not share it with data brokers or advertisers.
 
-## Your rights
+## 5. Data retention
 
-Subject to applicable law, you may have the right to:
+We keep account, contract, and billing records for as long as your account is active and as needed for legal, tax, accounting, and security purposes. Project materials and any client data we hold are deleted or returned within 30 days after the engagement ends, unless you ask us to keep them or the law requires longer retention. Public business contact information we collect for outreach is kept until we remove it or you ask us to. When you ask us to delete your data, we delete or de-identify it within a reasonable period, typically within 30 days, except where longer retention is required by law. Backups roll off on their normal cycle.
 
-- access your personal information;
-- correct inaccurate information;
-- request deletion;
-- restrict or object to certain processing;
-- receive a portable copy of information you provided; and
-- lodge a complaint with a supervisory authority (in the UK, the Information
-  Commissioner's Office).
+## 6. Security
 
-To exercise these rights, email privacy@tryentitle.com. We will respond within
-30 days, or sooner if applicable law requires.
+- Data is encrypted in transit with TLS.
+- Access to our systems and your accounts is limited to people who need it, authenticated, and protected with multi-factor authentication where available.
+- We use access credentials scoped to each project, and we do not keep client credentials in shared documents.
+- We run on infrastructure from providers that maintain independent security certifications, such as SOC 2. TryEntitle itself has not been independently audited against SOC 2, HIPAA, or similar frameworks, and we make no claim that it has.
 
-## Changes
+No system is perfectly secure. If you believe you have found a vulnerability or a security problem involving your data, email info@tryentitle.com right away. If a breach affects your data, we will notify you as required by law and without undue delay.
 
-We may update this Privacy Policy from time to time. Material changes will be
-reflected in the "Last updated" date at the top of this page.
+## 7. Your rights and choices
 
-## Contact
+You can ask us to access, correct, export, or delete your personal information, or to stop contacting you, by emailing info@tryentitle.com. Depending on where you live, such as California or the European Economic Area, you may have additional rights to access, correct, delete, port, restrict, or object to certain processing, and to not be discriminated against for exercising them. We do not sell or share personal information as those terms are defined under the CCPA.
 
-Privacy questions and data-subject requests:
-**privacy@tryentitle.com**
+Every outreach email includes a way to opt out. Reply "unsubscribe" or email us at any time and we will stop contacting you. We will respond to privacy requests within the time required by applicable law.
 
-General inquiries:
-**hello@tryentitle.com**
+## 8. Children's privacy
+
+The Service is for businesses and is not directed to children under 18. We do not knowingly collect personal information from children.
+
+## 9. Changes to this policy
+
+We may update this policy from time to time. Material changes will be communicated by email or a notice on our website, and the "Last updated" date above will change. Continued use of the Service after changes take effect means you accept the updated policy.
+
+## 10. Contact
+
+TryEntitle LLC is a Maryland limited liability company with its principal place of business in Owings Mills, Maryland, United States.
+
+Questions about privacy: info@tryentitle.com
+
+tryentitle.com

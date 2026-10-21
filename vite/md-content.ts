@@ -38,15 +38,20 @@ function slugify(s: string): string {
 }
 
 function createRenderer(): MarkdownIt {
-  const md = new MarkdownIt({ html: false, linkify: true, typographer: true })
   /*
-   * Typography is on for the quotes and apostrophes, but its text replacements
-   * are not: that rule rewrites "(c)" as "©", which silently corrupted the GDPR
-   * citation "Art. 6(1)(c)" on the privacy page. Legal text has to survive the
-   * renderer verbatim. Smart quotes come from the separate `smartquotes` rule
-   * and are unaffected; the content writes its own em dashes.
+   * TYPOGRAPHER OFF. Legal text has to survive the renderer character for
+   * character, and both halves of this feature rewrote it:
+   *
+   *   - `replacements` turned "(c)" into "©", which corrupted the GDPR citation
+   *     "Art. 6(1)(c)".
+   *   - `smartquotes` turned every straight " and ' into curly ones, so a
+   *     policy supplied with straight quotes — ("TryEntitle," "we," "us") —
+   *     published as ("TryEntitle," "we," "us"), not the document that was
+   *     signed off.
+   *
+   * The content files carry the punctuation they mean, em dashes included.
    */
-  md.disable('replacements')
+  const md = new MarkdownIt({ html: false, linkify: true, typographer: false })
   md.use(anchor, {
     slugify,
     permalink: anchor.permalink.linkInsideHeader({
