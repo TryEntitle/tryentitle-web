@@ -38,5 +38,8 @@ __screenshots__/
 # Vite
 *.timestamp-*-*.mjs
 
+# Sentry (local auth token)
+.env.sentry-build-plugin
+
 test-results/
 playwright-report/

@@ -5,6 +5,7 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { mdContent } from './vite/md-content'
 import { proofGuard } from './vite/proof'
 import { detailPaths, indexableRoutes } from './vite/routes'
@@ -55,11 +56,32 @@ const ssgOptions: ViteSSGOptions = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [mdContent(), proofGuard(), vue(), vueDevTools()],
+  plugins: [
+    mdContent(),
+    proofGuard(),
+    vue(),
+    vueDevTools(),
+    // Must be last so it sees the final bundle. Uploads source maps to
+    // Sentry for readable stack traces; no-ops (with a warning) when
+    // SENTRY_AUTH_TOKEN is unset, so CI/local builds without it still pass.
+    sentryVitePlugin({
+      org: 'tryentitle-wu',
+      project: 'tryentitle-web',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      sourcemaps: {
+        filesToDeleteAfterUpload: ['dist/**/*.map'],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+  },
+  build: {
+    // Hidden source maps: generated for Sentry's upload, not referenced by a
+    // sourceMappingURL comment, so they're never served to end users.
+    sourcemap: 'hidden',
   },
   ssgOptions,
 })
