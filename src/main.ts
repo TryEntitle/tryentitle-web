@@ -1,7 +1,9 @@
 import { ViteSSG } from 'vite-ssg'
+import * as Sentry from '@sentry/vue'
 import App from './App.vue'
 import { routes } from './router'
 import { initMotion, refreshMotion } from './lib/motion'
+import { SITE_URL } from './lib/constants'
 
 // Design tokens first, then base styles that consume them, then the motion layer
 // last — it composes on top of both and must be able to override neither.
@@ -41,8 +43,18 @@ export const createApp = ViteSSG(
       return { top: 0, behavior: 'instant' }
     },
   },
-  ({ router }) => {
+  ({ app, router }) => {
     if (!import.meta.env.SSR) {
+      Sentry.init({
+        app,
+        dsn: 'https://eb0d91b2873728cf589ad668f9ea63e0@o4512285639180288.ingest.us.sentry.io/4512285663821824',
+        integrations: [Sentry.browserTracingIntegration({ router }), Sentry.replayIntegration()],
+        tracesSampleRate: 1.0,
+        tracePropagationTargets: ['localhost', new RegExp(`^${SITE_URL}`)],
+        replaysSessionSampleRate: 0.1,
+        replaysOnErrorSampleRate: 1.0,
+      })
+
       // Move keyboard focus to the main landmark on route change so keyboard and
       // screen-reader users are not stranded at the top of a new document.
       //

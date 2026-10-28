@@ -203,7 +203,7 @@ Carried from PRD §18. These are **not** resolvable in code:
 | # | Decision | Blocks |
 |---|---|---|
 | D1 | Real Calendly URL | `BOOKING_URL` — currently a placeholder handle |
-| D2 | Production domain | `SITE_URL` — canonical, OG, and sitemap URLs |
+| D2 | ~~Production domain~~ | Resolved — live at `www.tryentitle.com` on Vercel; `SITE_URL` updated |
 | D3 | Logo/wordmark SVG | `Logo.vue` is a typographic placeholder |
 | D4 | Legal review | All four legal pages are unreviewed scaffolds (see below) |
 | D6 | Analytics tool | Nothing is instrumented yet; a cookieless tool avoids a consent banner |

@@ -7,8 +7,8 @@
  * the built site.
  */
 
-/** Canonical production origin. Update alongside D2 (domain/DNS). */
-export const SITE_URL = 'https://tryentitle.com'
+/** Canonical production origin (D2, resolved — live on Vercel; apex redirects here). */
+export const SITE_URL = 'https://www.tryentitle.com'
 
 export const SITE_NAME = 'TryEntitle'
 
