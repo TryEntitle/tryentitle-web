@@ -568,8 +568,6 @@ h3 {
   font-size: 16px;
   line-height: 1.55;
   color: var(--stone-800);
-  padding-left: 18px;
-  text-indent: -18px;
 }
 
 .panel__ink-body {
