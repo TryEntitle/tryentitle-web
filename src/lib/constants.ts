@@ -12,7 +12,7 @@ export const SITE_URL = 'https://www.tryentitle.com'
 
 export const SITE_NAME = 'TryEntitle'
 
-export const SITE_TAGLINE = 'Innovative, Operations, Solutions'
+export const SITE_TAGLINE = 'Innovative Operations Solutions'
 
 /** The single booking destination for the entire site (PRD D1, settled). */
 export const BOOKING_URL = 'https://calendly.com/tryentitle/30min'
