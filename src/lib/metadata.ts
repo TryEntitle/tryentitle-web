@@ -28,7 +28,7 @@ function absolute(path: string): string {
 
 /** Title as shown in the browser and OG card; home uses the bare site name. */
 export function pageTitle(title: string, path: string): string {
-  return path === '/' ? `${SITE_NAME} · ${SITE_TAGLINE}` : `${title} · ${SITE_NAME}`
+  return path === '/' ? `${SITE_NAME} | ${SITE_TAGLINE}` : `${title} | ${SITE_NAME}`
 }
 
 export function buildHead(meta: PageMeta): ReactiveHead {

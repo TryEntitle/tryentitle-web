@@ -12,6 +12,7 @@ export function organizationSchema(): Record<string, unknown> {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
+    logo: `${SITE_URL}/brand/icon-512.png`,
     description: SITE_TAGLINE,
     slogan: SITE_TAGLINE,
   }
