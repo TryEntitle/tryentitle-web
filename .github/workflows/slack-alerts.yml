@@ -1,7 +1,8 @@
 name: Slack alerts
 
-# Posts to #vercel-alerts (via SLACK_WEBHOOK_URL) whenever a PR is opened
-# or a new branch is created. Every message includes the GitHub link.
+# Posts to #vercel-alerts whenever a PR is opened or a new branch is created.
+# Requires repo secret SLACK_WEBHOOK_URL (Slack Incoming Webhook for that channel).
+# Jobs no-op instead of failing when the secret is missing.
 
 on:
   pull_request:
@@ -14,10 +15,23 @@ permissions:
 jobs:
   notify-pull-request:
     name: Notify Slack — pull request
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && vars.SLACK_ALERTS_ENABLED != 'false'
     runs-on: ubuntu-latest
     steps:
+      - name: Require Slack webhook secret
+        id: check
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "::notice::SLACK_WEBHOOK_URL is not set. Add it under Settings → Secrets and variables → Actions (Incoming Webhook for #vercel-alerts). Skipping Slack notify."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Post PR alert
+        if: steps.check.outputs.skip == 'false'
         uses: slackapi/slack-github-action@v2.1.1
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -43,10 +57,23 @@ jobs:
 
   notify-new-branch:
     name: Notify Slack — new branch
-    if: github.event_name == 'create' && github.event.ref_type == 'branch'
+    if: github.event_name == 'create' && github.event.ref_type == 'branch' && vars.SLACK_ALERTS_ENABLED != 'false'
     runs-on: ubuntu-latest
     steps:
+      - name: Require Slack webhook secret
+        id: check
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "::notice::SLACK_WEBHOOK_URL is not set. Add it under Settings → Secrets and variables → Actions (Incoming Webhook for #vercel-alerts). Skipping Slack notify."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Post branch alert
+        if: steps.check.outputs.skip == 'false'
         uses: slackapi/slack-github-action@v2.1.1
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
